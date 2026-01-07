@@ -1,0 +1,1363 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://fundserv.com/tfs/xml-aligned-schema",
+  "title": "TFS Trading Schema - XML Aligned",
+  "description": "JSON Schema automatically generated from TFS XML Schema for comprehensive validation",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "Integer3": {
+      "type": "string",
+      "pattern": "^\\d{3}$"
+    },
+    "Integer5": {
+      "type": "string",
+      "pattern": "^\\d{5}$"
+    },
+    "String2To20": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 2
+    },
+    "String3To5": {
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 3
+    },
+    "String5To7": {
+      "type": "string",
+      "maxLength": 7,
+      "minLength": 5
+    },
+    "String8": {
+      "type": "string",
+      "maxLength": 8,
+      "minLength": 1
+    },
+    "String10": {
+      "type": "string",
+      "maxLength": 10,
+      "minLength": 1
+    },
+    "String12": {
+      "type": "string",
+      "maxLength": 12,
+      "minLength": 1
+    },
+    "String15": {
+      "type": "string",
+      "maxLength": 15,
+      "minLength": 1
+    },
+    "String20": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 1
+    },
+    "String30": {
+      "type": "string",
+      "maxLength": 30,
+      "minLength": 1
+    },
+    "String40": {
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "String48": {
+      "type": "string",
+      "maxLength": 48,
+      "minLength": 1
+    },
+    "String60": {
+      "type": "string",
+      "maxLength": 60,
+      "minLength": 1
+    },
+    "String2To80": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 2
+    },
+    "String200": {
+      "type": "string",
+      "maxLength": 200,
+      "minLength": 1
+    },
+    "Amt9V2N": {
+      "type": "string",
+      "pattern": "^-?\\d{1,9}\\.\\d{2}$"
+    },
+    "Percent2V3": {
+      "type": "string",
+      "pattern": "^\\d{1,2}\\.\\d{3}$"
+    },
+    "Percent6": {
+      "type": "string",
+      "pattern": "^\\d{1,2}\\.\\d{3}$"
+    },
+    "Percent7": {
+      "type": "string",
+      "pattern": "^(\\d{1,2}\\.\\d{3}|100.000)$"
+    },
+    "Percent3V2": {
+      "type": "string",
+      "pattern": "^(\\d{1,2}\\.\\d{2}|100.00)$"
+    },
+    "Value14": {
+      "type": "string",
+      "pattern": "^\\d{1,9}\\.\\d{2,4}$"
+    },
+    "Date8": {
+      "type": "string",
+      "pattern": "^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$"
+    },
+    "Notnull": {
+      "type": "string"
+    },
+    "SINType": {
+      "type": "string",
+      "minLength": 9,
+      "maxLength": 9,
+      "pattern": "^0*[1-9][0-9]{0,8}$"
+    },
+    "Length4": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 4
+    },
+    "Alpha3To4": {
+      "type": "string",
+      "pattern": "^[A-Z]{3,4}$"
+    },
+    "AlphaNum1To5": {
+      "type": "string",
+      "pattern": "^[A-Z0-9]{1,5}$"
+    },
+    "Time6": {
+      "type": "string",
+      "pattern": "^(([0-1][0-9]|2[0-3])[0-5][0-9][0-5][0-9])$"
+    },
+    "Yes1": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "YesNo1": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ]
+    },
+    "Acctdesigtyp": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "Mgmtcodetyp": {
+      "type": "string",
+      "pattern": "^([A-Z][A-Z]([A-Z]|[0-9]))$"
+    },
+    "Provtype": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "Countrytype": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "Taxtype": {
+      "type": "string"
+    },
+    "Acctbasedflg": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Acctdesig": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "Addressln": {
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "Amtvalue": {
+      "type": "string",
+      "pattern": "^\\d{1,9}\\.\\d{2,4}$"
+    },
+    "Annualincrease": {
+      "type": "string",
+      "pattern": "^(\\d{1,2}\\.\\d{2}|100.00)$"
+    },
+    "Bensplit": {
+      "type": "string",
+      "pattern": "^(\\d{1,2}\\.\\d{3}|100.000)$"
+    },
+    "Birthdate": {
+      "type": "string",
+      "pattern": "^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$"
+    },
+    "Bkacctnum": {
+      "type": "string",
+      "maxLength": 12,
+      "minLength": 1
+    },
+    "Branchnum": {
+      "type": "string",
+      "pattern": "^\\d{5}$"
+    },
+    "City": {
+      "type": "string",
+      "maxLength": 30,
+      "minLength": 1
+    },
+    "Clerkid": {
+      "type": "string",
+      "maxLength": 8,
+      "minLength": 1
+    },
+    "Clientcomm": {
+      "type": "string",
+      "pattern": "^\\d{1,2}\\.\\d{3}$"
+    },
+    "Copyaddrss": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Copybkinfo": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Copyowner": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Corrlatnid": {
+      "type": "string",
+      "maxLength": 48,
+      "minLength": 1
+    },
+    "Country": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "Date": {
+      "type": "string",
+      "pattern": "^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$"
+    },
+    "Dillinkid": {
+      "type": "string",
+      "maxLength": 15,
+      "minLength": 1
+    },
+    "Dlracctid": {
+      "type": "string",
+      "maxLength": 15,
+      "minLength": 1
+    },
+    "Dlrcode": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 4
+    },
+    "Docreqdflg": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Dthbnftresetfund": {
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 3
+    },
+    "Dthbnftresetopt": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Edeliverflg": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Effectdate": {
+      "type": "string",
+      "pattern": "^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$"
+    },
+    "Email": {
+      "type": "string",
+      "maxLength": 60,
+      "minLength": 1
+    },
+    "Errorcode": {
+      "type": "string",
+      "pattern": "^\\d{3}$"
+    },
+    "Estate": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Estatesplit": {
+      "type": "string",
+      "pattern": "^(\\d{1,2}\\.\\d{3}|100.000)$"
+    },
+    "Fedbn": {
+      "type": "string",
+      "maxLength": 15,
+      "minLength": 1
+    },
+    "Feerate": {
+      "type": "string",
+      "pattern": "^\\d{1,2}\\.\\d{3}$"
+    },
+    "Firstname": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 2
+    },
+    "Frmacctdesig": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "Frmfundacctid": {
+      "type": "string",
+      "maxLength": 15,
+      "minLength": 1
+    },
+    "Frmfundid": {
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 3
+    },
+    "Frmmgmtcode": {
+      "type": "string",
+      "pattern": "^([A-Z][A-Z]([A-Z]|[0-9]))$"
+    },
+    "Fundacctid": {
+      "type": "string",
+      "maxLength": 15,
+      "minLength": 1
+    },
+    "Fundid": {
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 3
+    },
+    "Grossamt": {
+      "type": "string",
+      "pattern": "^-?\\d{1,9}\\.\\d{2}$"
+    },
+    "Groupid": {
+      "type": "string",
+      "maxLength": 15,
+      "minLength": 1
+    },
+    "Holder": {
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "Idnum": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 1
+    },
+    "Instutnum": {
+      "type": "string",
+      "pattern": "^\\d{3}$"
+    },
+    "Intacctid": {
+      "type": "string",
+      "maxLength": 15,
+      "minLength": 1
+    },
+    "Intcode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3,4}$"
+    },
+    "Interestindeposit": {
+      "type": "string",
+      "pattern": "^(\\d{1,2}\\.\\d{3}|100.000)$"
+    },
+    "Jurprov": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "Lastname": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 1
+    },
+    "Libfund": {
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 3
+    },
+    "Matguaresetfund": {
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 3
+    },
+    "Matguaresetopt": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Maturedate": {
+      "type": "string",
+      "pattern": "^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$"
+    },
+    "Mgmtcode": {
+      "type": "string",
+      "pattern": "^([A-Z][A-Z]([A-Z]|[0-9]))$"
+    },
+    "Mgmtspfc": {
+      "type": "string",
+      "maxLength": 200,
+      "minLength": 1
+    },
+    "Minamtflg": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Netamt": {
+      "type": "string",
+      "pattern": "^-?\\d{1,9}\\.\\d{2}$"
+    },
+    "Ordid": {
+      "type": "string",
+      "maxLength": 7,
+      "minLength": 5
+    },
+    "Orgflg": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Orgname": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 2
+    },
+    "Origdate": {
+      "type": "string",
+      "pattern": "^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$"
+    },
+    "Origordid": {
+      "type": "string",
+      "maxLength": 7,
+      "minLength": 5
+    },
+    "Otherdscrp": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 1
+    },
+    "Ownerbirthdate": {
+      "type": "string",
+      "pattern": "^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$"
+    },
+    "Ownersin": {
+      "type": "string",
+      "minLength": 9,
+      "maxLength": 9,
+      "pattern": "^0*[1-9][0-9]{0,8}$"
+    },
+    "Postalzip": {
+      "type": "string",
+      "maxLength": 10,
+      "minLength": 1
+    },
+    "Provbn": {
+      "type": "string",
+      "maxLength": 10,
+      "minLength": 1
+    },
+    "Provstate": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "Repcode": {
+      "type": "string",
+      "pattern": "^[A-Z0-9]{1,5}$"
+    },
+    "Settldate": {
+      "type": "string",
+      "pattern": "^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$"
+    },
+    "Siaindividualflg": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ]
+    },
+    "Sin": {
+      "type": "string",
+      "minLength": 9,
+      "maxLength": 9,
+      "pattern": "^0*[1-9][0-9]{0,8}$"
+    },
+    "Spousalbirthdate": {
+      "type": "string",
+      "pattern": "^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$"
+    },
+    "Spousalflg": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Srcid": {
+      "type": "string",
+      "maxLength": 15,
+      "minLength": 1
+    },
+    "Standordind": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Startdate": {
+      "type": "string",
+      "pattern": "^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$"
+    },
+    "Supconfirm": {
+      "type": "string",
+      "enum": [
+        "Y"
+      ]
+    },
+    "Sysplansplit": {
+      "type": "string",
+      "pattern": "^(\\d{1,2}\\.\\d{2}|100.00)$"
+    },
+    "Taxcode": {
+      "type": "string"
+    },
+    "Time": {
+      "type": "string",
+      "pattern": "^(([0-1][0-9]|2[0-3])[0-5][0-9][0-5][0-9])$"
+    },
+    "Tin": {
+      "type": "string",
+      "maxLength": 30,
+      "minLength": 1
+    },
+    "Tintype": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 1
+    },
+    "Tomgmtcode": {
+      "type": "string",
+      "pattern": "^([A-Z][A-Z]([A-Z]|[0-9]))$"
+    },
+    "Tradedate": {
+      "type": "string",
+      "pattern": "^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$"
+    },
+    "Actncode": {
+      "type": "string",
+      "enum": [
+        "NEW",
+        "CHG",
+        "CAN",
+        "CAX",
+        "AOT",
+        "REV"
+      ]
+    },
+    "Acctinfo": {
+      "$ref": "#/definitions/Acctinfo"
+    },
+    "Acctlookup": {
+      "$ref": "#/definitions/Acctlookup"
+    },
+    "Acctsetup": {
+      "$ref": "#/definitions/Acctsetup"
+    },
+    "Accttrnsfr": {
+      "$ref": "#/definitions/Accttrnsfr"
+    },
+    "Accttype": {
+      "type": "string",
+      "enum": [
+        "01",
+        "02",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22"
+      ]
+    },
+    "Accttypedtl": {
+      "type": "string",
+      "enum": [
+        "D",
+        "F",
+        "M"
+      ]
+    },
+    "Address": {
+      "$ref": "#/definitions/Address"
+    },
+    "Amt": {
+      "$ref": "#/definitions/Amt"
+    },
+    "Amttype": {
+      "type": "string",
+      "enum": [
+        "A",
+        "D",
+        "F",
+        "M",
+        "P",
+        "S",
+        "T",
+        "B",
+        "C",
+        "J",
+        "L",
+        "G",
+        "H"
+      ]
+    },
+    "Annuitant": {
+      "$ref": "#/definitions/Annuitant"
+    },
+    "Annuitantcondtl": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "Aot": {
+      "$ref": "#/definitions/Aot"
+    },
+    "Benrel": {
+      "type": "string",
+      "enum": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "98",
+        "99"
+      ]
+    },
+    "Bentype": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2"
+      ]
+    },
+    "Bkaccttype": {
+      "type": "string",
+      "enum": [
+        "C",
+        "O",
+        "R",
+        "S"
+      ]
+    },
+    "Bkinfo": {
+      "$ref": "#/definitions/Bkinfo"
+    },
+    "Buy": {
+      "$ref": "#/definitions/Buy"
+    },
+    "Cdicdata": {
+      "$ref": "#/definitions/Cdicdata"
+    },
+    "Certind": {
+      "type": "string",
+      "enum": [
+        "C",
+        "D",
+        "S"
+      ]
+    },
+    "Chequeinfo": {
+      "$ref": "#/definitions/Chequeinfo"
+    },
+    "Clientinfo": {
+      "$ref": "#/definitions/Clientinfo"
+    },
+    "Cntbpd": {
+      "type": "string",
+      "enum": [
+        "P"
+      ]
+    },
+    "Cntbwdcode": {
+      "type": "string",
+      "enum": [
+        "F",
+        "H",
+        "J",
+        "L",
+        "M",
+        "P",
+        "R",
+        "T"
+      ]
+    },
+    "Cntgtdthbendtl": {
+      "$ref": "#/definitions/Cntgtdthbendtl"
+    },
+    "Conprimdthben": {
+      "$ref": "#/definitions/Conprimdthben"
+    },
+    "Controllingperson": {
+      "$ref": "#/definitions/Controllingperson"
+    },
+    "Controllingpersontype": {
+      "type": "string",
+      "enum": [
+        "CRS801",
+        "CRS802",
+        "CRS803",
+        "CRS804",
+        "CRS805",
+        "CRS806",
+        "CRS807",
+        "CRS808",
+        "CRS809",
+        "CRS810",
+        "CRS811",
+        "CRS812",
+        "CRS813"
+      ]
+    },
+    "Correctnnum": {
+      "type": "string",
+      "pattern": "^(0[1-9]|1[0])$"
+    },
+    "Crsclassification": {
+      "type": "string",
+      "enum": [
+        "CRS101",
+        "CRS102",
+        "CRS103",
+        "FSRV00"
+      ]
+    },
+    "Currency": {
+      "type": "string",
+      "enum": [
+        "00",
+        "01",
+        "02",
+        "03"
+      ]
+    },
+    "Dillink": {
+      "$ref": "#/definitions/Dillink"
+    },
+    "Dilsrc": {
+      "type": "string",
+      "enum": [
+        "D"
+      ]
+    },
+    "Divopt": {
+      "type": "string",
+      "enum": [
+        "1",
+        "4",
+        "9"
+      ]
+    },
+    "Dlr": {
+      "$ref": "#/definitions/Dlr"
+    },
+    "Dobtype": {
+      "type": "string",
+      "enum": [
+        "S",
+        "B"
+      ]
+    },
+    "Dthben": {
+      "$ref": "#/definitions/Dthben"
+    },
+    "Dthbendtl": {
+      "$ref": "#/definitions/Dthbendtl"
+    },
+    "Dthbnftgua": {
+      "$ref": "#/definitions/Dthbnftgua"
+    },
+    "Errorset": {
+      "$ref": "#/definitions/Errorset"
+    },
+    "Fatcaclassification": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "S"
+      ]
+    },
+    "Fedwholdtaxrt": {
+      "type": "string",
+      "pattern": "^([5-9]\\.[0-9][0-9]|[1-9][0-9]\\.[0-9][0-9]|100.00)$"
+    },
+    "Feeinfo": {
+      "$ref": "#/definitions/Feeinfo"
+    },
+    "Field": {
+      "$ref": "#/definitions/Field"
+    },
+    "Foreignentity": {
+      "$ref": "#/definitions/Foreignentity"
+    },
+    "Foreignperson": {
+      "$ref": "#/definitions/Foreignperson"
+    },
+    "Frequency": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "Z"
+      ]
+    },
+    "Frmacct": {
+      "$ref": "#/definitions/Frmacct"
+    },
+    "Frmacctdtl": {
+      "$ref": "#/definitions/Frmacctdtl"
+    },
+    "Frminvstdtl": {
+      "$ref": "#/definitions/Frminvstdtl"
+    },
+    "Gender": {
+      "type": "string",
+      "enum": [
+        "M",
+        "F"
+      ]
+    },
+    "Giin": {
+      "type": "string",
+      "minLength": 19,
+      "maxLength": 19
+    },
+    "Gnpur": {
+      "type": "string",
+      "enum": [
+        "G",
+        "N"
+      ]
+    },
+    "Gnrdmtn": {
+      "type": "string",
+      "enum": [
+        "G",
+        "N"
+      ]
+    },
+    "Group": {
+      "$ref": "#/definitions/Group"
+    },
+    "Groupflg": {
+      "type": "string",
+      "enum": [
+        "D",
+        "I",
+        "F"
+      ]
+    },
+    "Ict": {
+      "$ref": "#/definitions/Ict"
+    },
+    "Ictrspn": {
+      "$ref": "#/definitions/Ictrspn"
+    },
+    "Idtype": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    "Idverify": {
+      "$ref": "#/definitions/Idverify"
+    },
+    "Individual": {
+      "$ref": "#/definitions/Individual"
+    },
+    "Individualtin": {
+      "$ref": "#/definitions/Individualtin"
+    },
+    "Indsettl": {
+      "$ref": "#/definitions/Indsettl"
+    },
+    "Int": {
+      "$ref": "#/definitions/Int"
+    },
+    "Invstdtl": {
+      "$ref": "#/definitions/Invstdtl"
+    },
+    "Itf": {
+      "$ref": "#/definitions/Itf"
+    },
+    "Itfben": {
+      "$ref": "#/definitions/Itfben"
+    },
+    "Jnt": {
+      "$ref": "#/definitions/Jnt"
+    },
+    "Jntannuitant": {
+      "$ref": "#/definitions/Jntannuitant"
+    },
+    "Jntowner": {
+      "$ref": "#/definitions/Jntowner"
+    },
+    "Jntsigtype": {
+      "type": "string",
+      "enum": [
+        "A",
+        "O"
+      ]
+    },
+    "Jntsurtype": {
+      "type": "string",
+      "enum": [
+        "J",
+        "T"
+      ]
+    },
+    "Language": {
+      "type": "string",
+      "enum": [
+        "E",
+        "F"
+      ]
+    },
+    "Lckdincode": {
+      "type": "string",
+      "enum": [
+        "L"
+      ]
+    },
+    "Lckinjur": {
+      "type": "string",
+      "enum": [
+        "AB",
+        "BC",
+        "MB",
+        "NB",
+        "NL",
+        "NS",
+        "NT",
+        "NU",
+        "ON",
+        "PE",
+        "QC",
+        "SK",
+        "YT",
+        "CAN"
+      ]
+    },
+    "Lei": {
+      "type": "string",
+      "pattern": "^[A-Z0-9]{20}$"
+    },
+    "Lib": {
+      "$ref": "#/definitions/Lib"
+    },
+    "Libopt": {
+      "type": "string",
+      "enum": [
+        "J",
+        "S"
+      ]
+    },
+    "Matgua": {
+      "$ref": "#/definitions/Matgua"
+    },
+    "Msg": {
+      "$ref": "#/definitions/Msg"
+    },
+    "Msgcreate": {
+      "$ref": "#/definitions/Msgcreate"
+    },
+    "Msgtype": {
+      "$ref": "#/definitions/Msgtype"
+    },
+    "Name": {
+      "$ref": "#/definitions/Name"
+    },
+    "Notinreasoncode": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "Notsupprtd": {
+      "$ref": "#/definitions/Notsupprtd"
+    },
+    "Ntwrk": {
+      "$ref": "#/definitions/Ntwrk"
+    },
+    "Ntwrkerror": {
+      "$ref": "#/definitions/Ntwrkerror"
+    },
+    "Ntwrkid": {
+      "type": "string",
+      "enum": [
+        "FSRV",
+        "NSM9"
+      ]
+    },
+    "Orddtl": {
+      "$ref": "#/definitions/Orddtl"
+    },
+    "Ordinq": {
+      "$ref": "#/definitions/Ordinq"
+    },
+    "Ordreq": {
+      "$ref": "#/definitions/Ordreq"
+    },
+    "Ordrspn": {
+      "$ref": "#/definitions/Ordrspn"
+    },
+    "Ordset": {
+      "$ref": "#/definitions/Ordset"
+    },
+    "Org": {
+      "$ref": "#/definitions/Org"
+    },
+    "Organizationtin": {
+      "$ref": "#/definitions/Organizationtin"
+    },
+    "Origntwrk": {
+      "type": "string",
+      "enum": [
+        "ATON"
+      ]
+    },
+    "Owner": {
+      "$ref": "#/definitions/Owner"
+    },
+    "Payee": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "D"
+      ]
+    },
+    "Payinstrc": {
+      "$ref": "#/definitions/Payinstrc"
+    },
+    "Payment": {
+      "$ref": "#/definitions/Payment"
+    },
+    "Personstatus": {
+      "type": "string",
+      "enum": [
+        "N",
+        "R"
+      ]
+    },
+    "Placeissue": {
+      "$ref": "#/definitions/Placeissue"
+    },
+    "Primdthben": {
+      "$ref": "#/definitions/Primdthben"
+    },
+    "Primdthbendtl": {
+      "$ref": "#/definitions/Primdthbendtl"
+    },
+    "Prmcaregvr": {
+      "$ref": "#/definitions/Prmcaregvr"
+    },
+    "Prmcaregvrdtl": {
+      "$ref": "#/definitions/Prmcaregvrdtl"
+    },
+    "Rdspben": {
+      "$ref": "#/definitions/Rdspben"
+    },
+    "Rdspbendtl": {
+      "$ref": "#/definitions/Rdspbendtl"
+    },
+    "Rdsprel": {
+      "type": "string",
+      "enum": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09"
+      ]
+    },
+    "Recipcode": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "7"
+      ]
+    },
+    "Reject": {
+      "$ref": "#/definitions/Reject"
+    },
+    "Respben": {
+      "$ref": "#/definitions/Respben"
+    },
+    "Respbendtl": {
+      "$ref": "#/definitions/Respbendtl"
+    },
+    "Reversal": {
+      "$ref": "#/definitions/Reversal"
+    },
+    "Rifpymt": {
+      "$ref": "#/definitions/Rifpymt"
+    },
+    "Rifredirect": {
+      "$ref": "#/definitions/Rifredirect"
+    },
+    "Rspnsrc": {
+      "type": "string",
+      "enum": [
+        "I",
+        "F",
+        "N"
+      ]
+    },
+    "Rtncode": {
+      "type": "string",
+      "enum": [
+        "00",
+        "01",
+        "98",
+        "99",
+        "50"
+      ]
+    },
+    "Seginfo": {
+      "$ref": "#/definitions/Seginfo"
+    },
+    "Segtrnsfr": {
+      "$ref": "#/definitions/Segtrnsfr"
+    },
+    "Sell": {
+      "$ref": "#/definitions/Sell"
+    },
+    "Settlmethd": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    "Settlsrc": {
+      "type": "string",
+      "enum": [
+        "D",
+        "I",
+        "F"
+      ]
+    },
+    "Src": {
+      "$ref": "#/definitions/Src"
+    },
+    "Srctype": {
+      "type": "string",
+      "enum": [
+        "D",
+        "I",
+        "F"
+      ]
+    },
+    "Spousal": {
+      "$ref": "#/definitions/Spousal"
+    },
+    "Sucsrannuitant": {
+      "$ref": "#/definitions/Sucsrannuitant"
+    },
+    "Sucsrowner": {
+      "$ref": "#/definitions/Sucsrowner"
+    },
+    "Switch": {
+      "$ref": "#/definitions/Switch"
+    },
+    "Sysplanfund": {
+      "$ref": "#/definitions/Sysplanfund"
+    },
+    "Target": {
+      "$ref": "#/definitions/Target"
+    },
+    "Targettype": {
+      "type": "string",
+      "enum": [
+        "D",
+        "I",
+        "F"
+      ]
+    },
+    "Taxcalcflg": {
+      "$ref": "#/definitions/Taxcalcflg"
+    },
+    "Taxevnt": {
+      "type": "string",
+      "enum": [
+        "D",
+        "N"
+      ]
+    },
+    "Tfsasucsr": {
+      "$ref": "#/definitions/Tfsasucsr"
+    },
+    "Titlecode": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    "Toacctdtl": {
+      "$ref": "#/definitions/Toacctdtl"
+    },
+    "Toinvstdtl": {
+      "$ref": "#/definitions/Toinvstdtl"
+    },
+    "Totcorrectn": {
+      "type": "string",
+      "pattern": "^(0[2-9]|1[0])$"
+    },
+    "Trnsfr": {
+      "$ref": "#/definitions/Trnsfr"
+    },
+    "Trxndtl": {
+      "$ref": "#/definitions/Trxndtl"
+    },
+    "Trxnrevn": {
+      "type": "string",
+      "pattern": "^([0-9][1-9]|[1-9][0-9])$"
+    },
+    "Trxntyp": {
+      "type": "string",
+      "enum": [
+        "4",
+        "5",
+        "6",
+        "8"
+      ]
+    },
+    "Trxntypdtl": {
+      "type": "string",
+      "enum": [
+        "1",
+        "4",
+        "6",
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    "Uci": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_\\./\\\\\\-:;]{1,20}$"
+    },
+    "Ucidata": {
+      "$ref": "#/definitions/Ucidata"
+    },
+    "Warning": {
+      "$ref": "#/definitions/Warning"
+    }
+  }
+}

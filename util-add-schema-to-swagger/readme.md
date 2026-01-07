@@ -44,9 +44,11 @@ Converts XML Schema (XSD) files to JSON Schema format with REST Service-specific
 
 **Features:**
 - ✅ Handles all REST Service XML Schema patterns and types
-- ✅ Converts XSD regex to JSON Schema regex with proper anchoring
+- ✅ Converts XSD regex to JSON Schema regex with proper anchoring and alternation
 - ✅ Preserves enumerations, length constraints, and patterns
-- ✅ Generates descriptive documentation for each type
+- ✅ Fixed pattern conversion bugs (double-escaping, alternation grouping)
+- ✅ Optional clean output without synthetic descriptions
+- ✅ Preserves XSD element sequence in JSON Schema output
 - ✅ Supports multiple JSON Schema draft versions (4, 6, 7)
 
 **Usage:**
@@ -222,6 +224,36 @@ Date:
 - **Enumeration Types**: 15+ business enums (SrcType, ActnCode, AmtType, etc.)
 - **Pattern Validations**: 20+ regex patterns for precise field validation
 - **API-Specific Types**: Transaction type validation per API (Buy, Sell, Switch, etc.)
+
+## 🔧 Recent Technical Improvements
+
+### **v2.1 - Pattern Conversion Fixes**
+**January 2026**: Fixed critical regex pattern conversion issues for better JSON Schema compatibility:
+
+#### **Fixed Double-Escaping Bug**
+- **Problem**: Patterns like `\d{3}` became `^\\\\d{3}$` (double-escaped)
+- **Solution**: Removed manual backslash escaping; `json.dumps()` handles this automatically
+- **Result**: Correct patterns like `^\\d{3}$` in JSON Schema
+
+#### **Fixed Alternation Anchoring**
+- **Problem**: Patterns like `\d{1,2}\.\d{3}|100.000` became `^\\d{1,2}\\.\\d{3}|100.000$` 
+- **Issue**: Anchors applied separately: "starts with first part OR ends with second part"
+- **Solution**: Auto-grouping for alternation: `^(\\d{1,2}\\.\\d{3}|100.000)$`
+- **Result**: Proper validation - entire string matches either alternative
+
+#### **Enhanced Pattern Examples**
+```json
+// Before (incorrect)
+"pattern": "^\\d{1,2}\\.\\d{3}|100.000$"  // ❌ Matches "12.345extra" 
+
+// After (correct)  
+"pattern": "^(\\d{1,2}\\.\\d{3}|100.000)$"  // ✅ Exact match only
+```
+
+#### **Clean Output Option**
+- **Feature**: Optional removal of synthetic descriptions for cleaner schemas
+- **Benefit**: Produces streamlined JSON Schema focused on validation constraints
+- **Usage**: Automatic when descriptions are not derived from XSD source
 
 ## 📚 Documentation
 

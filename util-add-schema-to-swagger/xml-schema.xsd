@@ -1,0 +1,1881 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="tfs" targetNamespace="tfs" elementFormDefault="qualified" version="20241001">
+	<xsd:annotation>
+		<xsd:documentation>COPYRIGHT 2004-2025 FUNDSERV INC. ALL RIGHTS RESERVED.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="integer3">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{3}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="integer5">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{5}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string2-20">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="20"/>
+			<xsd:minLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string3-5">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="5"/>
+			<xsd:minLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string5-7">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="7"/>
+			<xsd:minLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string8">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="8"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string10">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="10"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string12">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="12"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string15">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="15"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string20">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="20"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string30">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="30"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string40">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="40"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string48">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="48"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string60">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="60"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string2-80">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="80"/>
+			<xsd:minLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="string200">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="200"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="amt9v2n">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="-?\d{1,9}\.\d{2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="percent2v3">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{1,2}\.\d{3}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="percent6">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{1,2}\.\d{3}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="percent7">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{1,2}\.\d{3}|100.000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="percent3v2">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{1,2}\.\d{2}|100.00"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="value14">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{1,9}\.\d{2,4}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="date8">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="notnull">
+		<xsd:restriction base="xsd:int">
+			<xsd:minInclusive value="000000001"/>
+			<xsd:maxExclusive value="1000000000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="sintype">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="0*[1-9][0-9]{0,8}"/>
+			<xsd:length value="9"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="length4">
+		<xsd:restriction base="xsd:token">
+			<xsd:length value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="alpha3-4">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[A-Z]{3,4}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="alphanum1-5">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[A-Z0-9]{1,5}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="time6">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-1][0-9]|2[0-3])[0-5][0-9][0-5][0-9]"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="yes1">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Y"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="yesno1">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Y"/>
+			<xsd:enumeration value="N"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AcctDesigtyp">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="1"/>
+			<xsd:enumeration value="2"/>
+			<xsd:enumeration value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MgmtCodetyp">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[A-Z][A-Z]([A-Z]|[0-9])"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="provtype">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[A-Z]{2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="countrytype">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[A-Z]{3}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="taxtype">
+		<xsd:union memberTypes="provtype countrytype"/>
+	</xsd:simpleType>
+	<xsd:group name="namegroup">
+		<xsd:sequence>
+			<xsd:element ref="TitleCode" minOccurs="0"/>
+			<xsd:element ref="LastName"/>
+			<xsd:element ref="FirstName"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:element name="AcctBasedFlg" type="yes1"/>
+	<xsd:element name="AcctDesig" type="AcctDesigtyp"/>
+	<xsd:element name="AddressLn" type="string40"/>
+	<xsd:element name="AmtValue" type="value14"/>
+	<xsd:element name="AnnualIncrease" type="percent3v2"/>
+	<xsd:element name="BenSplit" type="percent7"/>
+	<xsd:element name="BirthDate" type="date8"/>
+	<xsd:element name="BkAcctNum" type="string12"/>
+	<xsd:element name="BranchNum" type="integer5"/>
+	<xsd:element name="City" type="string30"/>
+	<xsd:element name="ClerkID" type="string8"/>
+	<xsd:element name="ClientComm" type="percent6"/>
+	<xsd:element name="CopyAddrss" type="yes1"/>
+	<xsd:element name="CopyBkInfo" type="yes1"/>
+	<xsd:element name="CopyOwner" type="yes1"/>
+	<xsd:element name="CorrlatnID" type="string48"/>
+	<xsd:element name="Country" type="countrytype"/>
+	<xsd:element name="Date" type="date8"/>
+	<xsd:element name="DilLinkID" type="string15"/>
+	<xsd:element name="DlrAcctID" type="string15"/>
+	<xsd:element name="DlrCode" type="length4"/>
+	<xsd:element name="DocReqdFlg" type="yes1"/>
+	<xsd:element name="DthBnftResetFund" type="string3-5"/>
+	<xsd:element name="DthBnftResetOpt" type="yes1"/>
+	<xsd:element name="eDeliverFlg" type="yes1"/>
+	<xsd:element name="EffectDate" type="date8"/>
+	<xsd:element name="Email" type="string60"/>
+	<xsd:element name="ErrorCode" type="integer3"/>
+	<xsd:element name="Estate" type="yes1"/>
+	<xsd:element name="EstateSplit" type="percent7"/>
+	<xsd:element name="FedBN" type="string15"/>
+	<xsd:element name="FeeRate" type="percent2v3"/>
+	<xsd:element name="FirstName" type="string2-20"/>
+	<xsd:element name="FrmAcctDesig" type="AcctDesigtyp"/>
+	<xsd:element name="FrmFundAcctID" type="string15"/>
+	<xsd:element name="FrmFundID" type="string3-5"/>
+	<xsd:element name="FrmMgmtCode" type="MgmtCodetyp"/>
+	<xsd:element name="FundAcctID" type="string15"/>
+	<xsd:element name="FundID" type="string3-5"/>
+	<xsd:element name="GrossAmt" type="amt9v2n"/>
+	<xsd:element name="GroupID" type="string15"/>
+	<xsd:element name="Holder" type="string40"/>
+	<xsd:element name="IDNum" type="string20"/>
+	<xsd:element name="InstutNum" type="integer3"/>
+	<xsd:element name="IntAcctID" type="string15"/>
+	<xsd:element name="IntCode" type="alpha3-4"/>
+	<xsd:element name="InterestInDeposit" type="percent7"/>
+	<xsd:element name="JurProv" type="provtype"/>
+	<xsd:element name="LastName" type="string20"/>
+	<xsd:element name="LIBFund" type="string3-5"/>
+	<xsd:element name="MatGuaResetFund" type="string3-5"/>
+	<xsd:element name="MatGuaResetOpt" type="yes1"/>
+	<xsd:element name="MatureDate" type="date8"/>
+	<xsd:element name="MgmtCode" type="MgmtCodetyp"/>
+	<xsd:element name="MgmtSpfc" type="string200"/>
+	<xsd:element name="MinAmtFlg" type="yes1"/>
+	<xsd:element name="NetAmt" type="amt9v2n"/>
+	<xsd:element name="OrdID" type="string5-7"/>
+	<xsd:element name="OrgFlg" type="yes1"/>
+	<xsd:element name="OrgName" type="string2-80"/>
+	<xsd:element name="OrigDate" type="date8"/>
+	<xsd:element name="OrigOrdID" type="string5-7"/>
+	<xsd:element name="OtherDscrp" type="string20"/>
+	<xsd:element name="OwnerBirthDate" type="date8"/>
+	<xsd:element name="OwnerSIN" type="sintype"/>
+	<xsd:element name="PostalZip" type="string10"/>
+	<xsd:element name="ProvBN" type="string10"/>
+	<xsd:element name="ProvState" type="provtype"/>
+	<xsd:element name="RepCode" type="alphanum1-5"/>
+	<xsd:element name="SettlDate" type="date8"/>
+	<xsd:element name="SIAIndividualFlg" type="yesno1"/>
+	<xsd:element name="SIN" type="sintype"/>
+	<xsd:element name="SpousalBirthDate" type="date8"/>
+	<xsd:element name="SpousalFlg" type="yes1"/>
+	<xsd:element name="SrcID" type="string15"/>
+	<xsd:element name="StandOrdInd" type="yes1"/>
+	<xsd:element name="StartDate" type="date8"/>
+	<xsd:element name="SupConfirm" type="yes1"/>
+	<xsd:element name="SysPlanSplit" type="percent3v2"/>
+	<xsd:element name="TaxCode" type="taxtype"/>
+	<xsd:element name="Time" type="time6"/>
+	<xsd:element name="TIN" type="string30"/>
+	<xsd:element name="TINType" type="string20"/>
+	<xsd:element name="ToMgmtCode" type="MgmtCodetyp"/>
+	<xsd:element name="TradeDate" type="date8"/>
+	<xsd:element name="ActnCode">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="NEW"/>
+				<xsd:enumeration value="CHG"/>
+				<xsd:enumeration value="CAN"/>
+				<xsd:enumeration value="CAX"/>
+				<xsd:enumeration value="AOT"/>
+				<xsd:enumeration value="REV"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="AcctInfo">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="AcctDesig"/>
+				<xsd:element ref="AcctType"/>
+				<xsd:element ref="AcctTypeDtl" minOccurs="0"/>
+				<xsd:element ref="RecipCode"/>
+				<xsd:element ref="TaxCode"/>
+				<xsd:element ref="Group" minOccurs="0"/>
+				<xsd:element ref="TaxCalcFlg" minOccurs="0"/>
+				<xsd:element ref="SpousalFlg" minOccurs="0"/>
+				<xsd:element ref="LckdInCode" minOccurs="0"/>
+				<xsd:element ref="MgmtSpfc" minOccurs="0"/>
+				<xsd:element ref="eDeliverFlg" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="AcctLookup">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="MgmtCode"/>
+				<xsd:element ref="FundAcctID"/>
+				<xsd:element ref="AcctDesig"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="AcctSetup">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Dlr"/>
+				<xsd:element ref="Int" minOccurs="0"/>
+				<xsd:element ref="AcctInfo"/>
+				<xsd:element ref="Owner"/>
+				<xsd:element ref="Jnt" minOccurs="0"/>
+				<xsd:element ref="Spousal" minOccurs="0"/>
+				<xsd:element ref="ITF" minOccurs="0"/>
+				<xsd:choice minOccurs="0">
+					<xsd:element ref="RESPBenDtl"/>
+					<xsd:element ref="DthBenDtl"/>
+					<xsd:element ref="RDSPBenDtl"/>
+				</xsd:choice>
+				<xsd:element ref="TFSASucsr" minOccurs="0"/>
+				<xsd:element ref="SegInfo" minOccurs="0"/>
+				<xsd:element ref="PrmCareGvrDtl" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="AcctTrnsfr">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="MgmtCode"/>
+				<xsd:element ref="FundAcctID" minOccurs="0"/>
+				<xsd:element ref="AcctDesig"/>
+				<xsd:element ref="DlrAcctID" minOccurs="0"/>
+				<xsd:element ref="AcctType" minOccurs="0"/>
+				<xsd:element ref="IntAcctID" minOccurs="0"/>
+				<xsd:choice minOccurs="0">
+					<xsd:element ref="DthBenDtl"/>
+					<xsd:element ref="SegTrnsfr"/>
+				</xsd:choice>
+				<xsd:element ref="TFSASucsr" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="AcctType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="01"/>
+				<xsd:enumeration value="02"/>
+				<xsd:enumeration value="04"/>
+				<xsd:enumeration value="05"/>
+				<xsd:enumeration value="06"/>
+				<xsd:enumeration value="07"/>
+				<xsd:enumeration value="08"/>
+				<xsd:enumeration value="10"/>
+				<xsd:enumeration value="11"/>
+				<xsd:enumeration value="12"/>
+				<xsd:enumeration value="13"/>
+				<xsd:enumeration value="14"/>
+				<xsd:enumeration value="15"/>
+				<xsd:enumeration value="16"/>
+				<xsd:enumeration value="17"/>
+				<xsd:enumeration value="18"/>
+				<xsd:enumeration value="19"/>
+				<xsd:enumeration value="20"/>
+				<xsd:enumeration value="21"/>
+				<xsd:enumeration value="22"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="AcctTypeDtl">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="F"/>
+				<xsd:enumeration value="M"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Address">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="AddressLn" maxOccurs="3"/>
+				<xsd:element ref="City"/>
+				<xsd:element ref="ProvState" minOccurs="0"/>
+				<xsd:element ref="Country"/>
+				<xsd:element ref="PostalZip" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Amt">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="AmtType"/>
+				<xsd:element ref="AmtValue" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="AmtType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="A"/>
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="F"/>
+				<xsd:enumeration value="M"/>
+				<xsd:enumeration value="P"/>
+				<xsd:enumeration value="S"/>
+				<xsd:enumeration value="T"/>
+				<xsd:enumeration value="B"/>
+				<xsd:enumeration value="C"/>
+				<xsd:enumeration value="J"/>
+				<xsd:enumeration value="L"/>
+				<xsd:enumeration value="G"/>
+				<xsd:enumeration value="H"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Annuitant">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="AnnuitantConDtl">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="1"/>
+				<xsd:enumeration value="2"/>
+				<xsd:enumeration value="3"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="AOT">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="OrigDate"/>
+				<xsd:element ref="OrigOrdID" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="BenRel">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="01"/>
+				<xsd:enumeration value="02"/>
+				<xsd:enumeration value="03"/>
+				<xsd:enumeration value="04"/>
+				<xsd:enumeration value="05"/>
+				<xsd:enumeration value="06"/>
+				<xsd:enumeration value="07"/>
+				<xsd:enumeration value="08"/>
+				<xsd:enumeration value="09"/>
+				<xsd:enumeration value="10"/>
+				<xsd:enumeration value="11"/>
+				<xsd:enumeration value="98"/>
+				<xsd:enumeration value="99"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="BenType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="1"/>
+				<xsd:enumeration value="2"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="BkAcctType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="C"/>
+				<xsd:enumeration value="O"/>
+				<xsd:enumeration value="R"/>
+				<xsd:enumeration value="S"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="BkInfo">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="InstutNum"/>
+				<xsd:element ref="BranchNum"/>
+				<xsd:element ref="BkAcctType" minOccurs="0"/>
+				<xsd:element ref="BkAcctNum"/>
+				<xsd:element ref="Currency" minOccurs="0"/>
+				<xsd:element ref="Holder"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Buy">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TrxnTyp"/>
+				<xsd:element ref="TrxnTypDtl" minOccurs="0"/>
+				<xsd:element ref="FundID"/>
+				<xsd:element ref="Amt"/>
+				<xsd:element ref="GNPur"/>
+				<xsd:element ref="TaxCode"/>
+				<xsd:element ref="ClientComm" minOccurs="0"/>
+				<xsd:element ref="SettlMethd"/>
+				<xsd:element ref="SettlSrc"/>
+				<xsd:element ref="IndSettl" minOccurs="0"/>
+				<xsd:element ref="CertInd" minOccurs="0"/>
+				<xsd:element ref="DivOpt" minOccurs="0"/>
+				<xsd:element ref="Payment" minOccurs="0"/>
+				<xsd:element ref="CntbWdCode" minOccurs="0"/>
+				<xsd:element ref="CntbPd" minOccurs="0"/>
+				<xsd:element ref="StandOrdInd" minOccurs="0"/>
+				<xsd:element ref="FeeInfo" minOccurs="0"/>
+				<xsd:element ref="AcctTypeDtl" minOccurs="0"/>
+				<xsd:element ref="MgmtSpfc" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CDICData">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="LEI" minOccurs="0"/>
+				<xsd:element ref="UCIData" maxOccurs="11"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CertInd">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="C"/>
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="S"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ChequeInfo">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Payee"/>
+				<xsd:element ref="Name" minOccurs="0"/>
+				<xsd:element ref="Address" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ClientInfo">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice minOccurs="0">
+					<xsd:element ref="Individual"/>
+					<xsd:element ref="Org"/>
+				</xsd:choice>
+				<xsd:element ref="Language" minOccurs="0"/>
+				<xsd:element ref="Email" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CntbPd">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="P"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="CntbWdCode">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="F"/>
+				<xsd:enumeration value="H"/>
+				<xsd:enumeration value="J"/>
+				<xsd:enumeration value="L"/>
+				<xsd:enumeration value="M"/>
+				<xsd:enumeration value="P"/>
+				<xsd:enumeration value="R"/>
+				<xsd:enumeration value="T"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="CntgtDthBenDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DthBen" maxOccurs="4"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ConPrimDthBen">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="BenType"/>
+				<xsd:element ref="BenRel" minOccurs="0"/>
+				<xsd:element ref="BenSplit" minOccurs="0"/>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ControllingPerson">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ControllingPersonType" minOccurs="0"/>
+				<xsd:element ref="LastName"/>
+				<xsd:element ref="FirstName"/>
+				<xsd:element ref="BirthDate" minOccurs="0"/>
+				<xsd:element ref="SIN" minOccurs="0"/>
+				<xsd:element ref="Address"/>
+				<xsd:element ref="ForeignPerson"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ControllingPersonType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="CRS801"/>
+				<xsd:enumeration value="CRS802"/>
+				<xsd:enumeration value="CRS803"/>
+				<xsd:enumeration value="CRS804"/>
+				<xsd:enumeration value="CRS805"/>
+				<xsd:enumeration value="CRS806"/>
+				<xsd:enumeration value="CRS807"/>
+				<xsd:enumeration value="CRS808"/>
+				<xsd:enumeration value="CRS809"/>
+				<xsd:enumeration value="CRS810"/>
+				<xsd:enumeration value="CRS811"/>
+				<xsd:enumeration value="CRS812"/>
+				<xsd:enumeration value="CRS813"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="CorrectnNum">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:pattern value="(0[1-9]|1[0])"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="CRSClassification">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="CRS101"/>
+				<xsd:enumeration value="CRS102"/>
+				<xsd:enumeration value="CRS103"/>
+				<xsd:enumeration value="FSRV00"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Currency">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="00"/>
+				<xsd:enumeration value="01"/>
+				<xsd:enumeration value="02"/>
+				<xsd:enumeration value="03"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DilLink">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DilLinkID"/>
+				<xsd:element ref="CorrectnNum"/>
+				<xsd:element ref="TotCorrectn"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DilSrc">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="D"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DivOpt">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="1"/>
+				<xsd:enumeration value="4"/>
+				<xsd:enumeration value="9"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Dlr">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DlrCode"/>
+				<xsd:element ref="RepCode" minOccurs="0"/>
+				<xsd:element ref="DlrAcctID" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DOBType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="S"/>
+				<xsd:enumeration value="B"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DthBen">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="BenType"/>
+				<xsd:element ref="BenRel" minOccurs="0"/>
+				<xsd:element ref="BenSplit" minOccurs="0"/>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DthBenDtl">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="Estate"/>
+				<xsd:element ref="DthBen" maxOccurs="10"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DthBnftGua">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DthBnftResetOpt"/>
+				<xsd:element ref="DthBnftResetFund" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ErrorSet">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="NtwrkError" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="FATCAClassification">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="A"/>
+				<xsd:enumeration value="B"/>
+				<xsd:enumeration value="C"/>
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="E"/>
+				<xsd:enumeration value="F"/>
+				<xsd:enumeration value="G"/>
+				<xsd:enumeration value="H"/>
+				<xsd:enumeration value="I"/>
+				<xsd:enumeration value="S"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="FedWHoldTaxRt">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:pattern value="([5-9]\.[0-9][0-9]|[1-9][0-9]\.[0-9][0-9]|100.00)"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="FeeInfo">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="FeeRate"/>
+				<xsd:element ref="AcctBasedFlg" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Field">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="AcctTypeDtl"/>
+				<xsd:element ref="Address"/>
+				<xsd:element ref="BenRel"/>
+				<xsd:element ref="BenSplit"/>
+				<xsd:element ref="BenType"/>
+				<xsd:element ref="BirthDate"/>
+				<xsd:element ref="eDeliverFlg"/>
+				<xsd:element ref="Email"/>
+				<xsd:element ref="FedBN"/>
+				<xsd:element ref="Gender"/>
+				<xsd:element ref="Group"/>
+				<xsd:element ref="Language"/>
+				<xsd:element ref="MatureDate"/>
+				<xsd:element ref="MgmtSpfc"/>
+				<xsd:element ref="ProvBN"/>
+				<xsd:element ref="SIN"/>
+				<xsd:element ref="TaxCalcFlg"/>
+				<xsd:element ref="TitleCode"/>
+				<xsd:element ref="LckdInCode"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ForeignEntity">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="OrganizationTIN" maxOccurs="5"/>
+				<xsd:element ref="GIIN" minOccurs="0"/>
+				<xsd:element ref="ControllingPerson" minOccurs="0" maxOccurs="3"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ForeignPerson">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="IndividualTIN" maxOccurs="5"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Frequency">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="1"/>
+				<xsd:enumeration value="2"/>
+				<xsd:enumeration value="3"/>
+				<xsd:enumeration value="4"/>
+				<xsd:enumeration value="5"/>
+				<xsd:enumeration value="6"/>
+				<xsd:enumeration value="7"/>
+				<xsd:enumeration value="8"/>
+				<xsd:enumeration value="Z"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="FrmAcct">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="FundAcctID" minOccurs="0"/>
+				<xsd:element ref="AcctDesig"/>
+				<xsd:element ref="DlrCode" minOccurs="0"/>
+				<xsd:element ref="DlrAcctID" minOccurs="0"/>
+				<xsd:element ref="AcctType" minOccurs="0"/>
+				<xsd:element ref="IntCode" minOccurs="0"/>
+				<xsd:element ref="IntAcctID" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="FrmAcctDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="FrmInvstDtl" maxOccurs="10"/>
+				<xsd:element ref="MgmtSpfc" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="FrmInvstDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="FundID"/>
+				<xsd:element ref="GNRdmtn"/>
+				<xsd:element ref="Amt"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Gender">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="M"/>
+				<xsd:enumeration value="F"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GIIN">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+				<xsd:length value="19"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GNPur">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="G"/>
+				<xsd:enumeration value="N"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="GNRdmtn">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="G"/>
+				<xsd:enumeration value="N"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Group">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="GroupFlg"/>
+				<xsd:element ref="GroupID" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="GroupFlg">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="I"/>
+				<xsd:enumeration value="F"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ICT">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TrxnTyp"/>
+				<xsd:element ref="TrxnTypDtl"/>
+				<xsd:element ref="SettlMethd"/>
+				<xsd:element ref="SettlSrc"/>
+				<xsd:element ref="ToMgmtCode"/>
+				<xsd:element ref="FrmMgmtCode"/>
+				<xsd:element ref="FrmFundAcctID"/>
+				<xsd:element ref="FrmAcctDesig"/>
+				<xsd:element ref="TaxCode"/>
+				<xsd:element ref="FrmAcctDtl" minOccurs="0"/>
+				<xsd:element ref="ToAcctDtl" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ICTRspn">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="InvstDtl" maxOccurs="10"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="IDType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="A"/>
+				<xsd:enumeration value="B"/>
+				<xsd:enumeration value="C"/>
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="E"/>
+				<xsd:enumeration value="F"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="IDVerify">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="IDType"/>
+				<xsd:element ref="OtherDscrp" minOccurs="0"/>
+				<xsd:element ref="IDNum"/>
+				<xsd:element ref="PlaceIssue"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Individual">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:group ref="namegroup" minOccurs="0"/>
+				<xsd:element ref="SIN" minOccurs="0"/>
+				<xsd:element ref="BirthDate" minOccurs="0"/>
+				<xsd:element ref="Gender" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="IndividualTIN">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Country"/>
+				<xsd:element ref="EffectDate"/>
+				<xsd:element ref="PersonStatus"/>
+				<xsd:element ref="TIN" minOccurs="0"/>
+				<xsd:element ref="NoTINReasonCode" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="IndSettl">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="BkInfo"/>
+				<xsd:element ref="CopyBkInfo"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Int">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="IntCode"/>
+				<xsd:element ref="IntAcctID" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="InvstDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="MgmtCode"/>
+				<xsd:element ref="FundID"/>
+				<xsd:element ref="RtnCode"/>
+				<xsd:element ref="Reject" minOccurs="0"/>
+				<xsd:element ref="Warning" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ITF">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ITFBen"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ITFBen">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:choice minOccurs="0">
+					<xsd:element ref="ForeignPerson"/>
+					<xsd:element ref="ForeignEntity"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Jnt">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="JntSurType"/>
+				<xsd:element ref="JntSigType"/>
+				<xsd:element ref="JntOwner" maxOccurs="5"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="JntAnnuitant">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="AnnuitantConDtl" minOccurs="0"/>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="JntOwner">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address" minOccurs="0"/>
+				<xsd:element ref="RDSPRel" minOccurs="0"/>
+				<xsd:element ref="IDVerify" minOccurs="0"/>
+				<xsd:element ref="ForeignPerson" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="JntSigType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="A"/>
+				<xsd:enumeration value="O"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="JntSurType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="J"/>
+				<xsd:enumeration value="T"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Language">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="E"/>
+				<xsd:enumeration value="F"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LckdInCode">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="L"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LckInJur">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="AB"/>
+				<xsd:enumeration value="BC"/>
+				<xsd:enumeration value="MB"/>
+				<xsd:enumeration value="NB"/>
+				<xsd:enumeration value="NL"/>
+				<xsd:enumeration value="NS"/>
+				<xsd:enumeration value="NT"/>
+				<xsd:enumeration value="NU"/>
+				<xsd:enumeration value="ON"/>
+				<xsd:enumeration value="PE"/>
+				<xsd:enumeration value="QC"/>
+				<xsd:enumeration value="SK"/>
+				<xsd:enumeration value="YT"/>
+				<xsd:enumeration value="CAN"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LEI">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:pattern value="[A-Z0-9]{20}"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LIB">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="LIBOpt"/>
+				<xsd:element ref="LIBFund" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="LIBOpt">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="J"/>
+				<xsd:enumeration value="S"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="MatGua">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="MatGuaResetOpt"/>
+				<xsd:element ref="MatGuaResetFund" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Msg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="MsgCreate"/>
+				<xsd:element ref="Ntwrk" minOccurs="0"/>
+				<xsd:element ref="MsgType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="MsgCreate">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Date"/>
+				<xsd:element ref="Time"/>
+				<xsd:element ref="Src"/>
+				<xsd:element ref="Target"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="MsgType">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="OrdReq"/>
+				<xsd:element ref="OrdInq"/>
+				<xsd:element ref="OrdRspn"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Name">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="OrgName"/>
+				<xsd:group ref="namegroup"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="NoTINReasonCode">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="1"/>
+				<xsd:enumeration value="2"/>
+				<xsd:enumeration value="3"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="NotSupprtd">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Field" maxOccurs="5"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Ntwrk">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="NtwrkID"/>
+				<xsd:element ref="Date"/>
+				<xsd:element ref="Time"/>
+				<xsd:element ref="OrdID" minOccurs="0"/>
+				<xsd:element ref="TradeDate"/>
+				<xsd:element ref="SettlDate"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="NtwrkError">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="RspnSrc"/>
+				<xsd:element ref="RtnCode"/>
+				<xsd:element ref="ErrorCode"/>
+				<xsd:element ref="CorrlatnID" minOccurs="0"/>
+				<xsd:element ref="OrdID" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="NtwrkID">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="FSRV"/>
+				<xsd:enumeration value="NSM9"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="OrdDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice>
+					<xsd:element ref="AcctSetup"/>
+					<xsd:element ref="AcctLookup"/>
+					<xsd:element ref="AcctTrnsfr"/>
+				</xsd:choice>
+				<xsd:element ref="TrxnDtl"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="OrdInq">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ActnCode"/>
+				<xsd:element ref="SrcID"/>
+				<xsd:element ref="TrxnRevn" minOccurs="0"/>
+				<xsd:element ref="SrcType" minOccurs="0"/>
+				<xsd:element ref="DlrCode" minOccurs="0"/>
+				<xsd:element ref="IntCode" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="OrdReq">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ActnCode"/>
+				<xsd:element ref="SrcID"/>
+				<xsd:element ref="TrxnRevn" minOccurs="0"/>
+				<xsd:element ref="DlrCode" minOccurs="0"/>
+				<xsd:element ref="IntCode" minOccurs="0"/>
+				<xsd:element ref="ClerkID" minOccurs="0"/>
+				<xsd:element ref="RepCode"/>
+				<xsd:element ref="SupConfirm" minOccurs="0"/>
+				<xsd:element ref="DilSrc" minOccurs="0"/>
+				<xsd:element ref="DilLink" minOccurs="0"/>
+				<xsd:element ref="OrdDtl" minOccurs="0"/>
+				<xsd:element ref="Reversal" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="OrdRspn">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ActnCode"/>
+				<xsd:element ref="SrcID"/>
+				<xsd:element ref="OrdID" minOccurs="0"/>
+				<xsd:element ref="TrxnRevn" minOccurs="0"/>
+				<xsd:element ref="DlrCode" minOccurs="0"/>
+				<xsd:element ref="IntCode" minOccurs="0"/>
+				<xsd:element ref="FundAcctID" minOccurs="0"/>
+				<xsd:element ref="TradeDate" minOccurs="0"/>
+				<xsd:element ref="SettlDate" minOccurs="0"/>
+				<xsd:element ref="DocReqdFlg" minOccurs="0"/>
+				<xsd:element ref="RspnSrc"/>
+				<xsd:element ref="RtnCode"/>
+				<xsd:element ref="Reject" minOccurs="0"/>
+				<xsd:element ref="Warning" minOccurs="0"/>
+				<xsd:element ref="NotSupprtd" minOccurs="0"/>
+				<xsd:element ref="ICTRspn" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="OrdSet">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Msg" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="Version" type="xsd:string" use="required" fixed="35"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Org">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="OrgName"/>
+				<xsd:element ref="FedBN" minOccurs="0"/>
+				<xsd:element ref="ProvBN" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="OrganizationTIN">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Country"/>
+				<xsd:element ref="EffectDate"/>
+				<xsd:element ref="TINType" minOccurs="0"/>
+				<xsd:element ref="TIN" minOccurs="0"/>
+				<xsd:element ref="NoTINReasonCode" minOccurs="0"/>
+				<xsd:choice>
+					<xsd:element ref="FATCAClassification"/>
+					<xsd:element ref="CRSClassification"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="OrigNtwrk">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="ATON"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Owner">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address"/>
+				<xsd:element ref="RDSPRel" minOccurs="0"/>
+				<xsd:element ref="IDVerify" minOccurs="0"/>
+				<xsd:choice minOccurs="0">
+					<xsd:element ref="ForeignPerson"/>
+					<xsd:element ref="ForeignEntity"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Payee">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="A"/>
+				<xsd:enumeration value="B"/>
+				<xsd:enumeration value="D"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="PayInstrc">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="InstutNum"/>
+				<xsd:element ref="BranchNum"/>
+				<xsd:element ref="BkAcctType" minOccurs="0"/>
+				<xsd:element ref="BkAcctNum"/>
+				<xsd:element ref="Currency" minOccurs="0"/>
+				<xsd:element ref="Holder"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Payment">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="ChequeInfo"/>
+				<xsd:element ref="BkInfo"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PersonStatus">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="N"/>
+				<xsd:enumeration value="R"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="PlaceIssue">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Country"/>
+				<xsd:element ref="ProvState" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PrimDthBen">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="BenType"/>
+				<xsd:element ref="BenRel" minOccurs="0"/>
+				<xsd:element ref="BenSplit" minOccurs="0"/>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address" minOccurs="0"/>
+				<xsd:element ref="ConPrimDthBen" minOccurs="0" maxOccurs="4"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PrimDthBenDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="EstateSplit" minOccurs="0"/>
+				<xsd:element ref="PrimDthBen" minOccurs="0" maxOccurs="10"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PrmCareGvr">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ClientInfo"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PrmCareGvrDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PrmCareGvr" maxOccurs="2"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RDSPBen">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RDSPBenDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="RDSPBen"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RDSPRel">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="01"/>
+				<xsd:enumeration value="02"/>
+				<xsd:enumeration value="03"/>
+				<xsd:enumeration value="04"/>
+				<xsd:enumeration value="05"/>
+				<xsd:enumeration value="06"/>
+				<xsd:enumeration value="07"/>
+				<xsd:enumeration value="08"/>
+				<xsd:enumeration value="09"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="RecipCode">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="1"/>
+				<xsd:enumeration value="2"/>
+				<xsd:enumeration value="3"/>
+				<xsd:enumeration value="4"/>
+				<xsd:enumeration value="5"/>
+				<xsd:enumeration value="7"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Reject">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ErrorCode" maxOccurs="5"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RESPBen">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="BenRel"/>
+				<xsd:element ref="BenSplit" minOccurs="0"/>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:choice>
+					<xsd:element ref="CopyAddrss"/>
+					<xsd:element ref="Address"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RESPBenDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="RESPBen" maxOccurs="10"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Reversal">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="OrigDate"/>
+				<xsd:element ref="OrigOrdID" minOccurs="0"/>
+				<xsd:element ref="FundAcctID"/>
+				<xsd:element ref="FundID"/>
+				<xsd:element ref="TrxnTyp"/>
+				<xsd:element ref="TrxnTypDtl" minOccurs="0"/>
+				<xsd:element ref="GrossAmt" minOccurs="0"/>
+				<xsd:element ref="NetAmt" minOccurs="0"/>
+				<xsd:element ref="SrcID" minOccurs="0"/>
+				<xsd:element ref="CntbWdCode" minOccurs="0"/>
+				<xsd:element ref="FrmFundID" minOccurs="0"/>
+				<xsd:element ref="FrmFundAcctID" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RIFPymt">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="StartDate"/>
+				<xsd:element ref="Frequency"/>
+				<xsd:element ref="SpousalBirthDate" minOccurs="0"/>
+				<xsd:element ref="AnnualIncrease" minOccurs="0"/>
+				<xsd:choice>
+					<xsd:element ref="MinAmtFlg"/>
+					<xsd:element ref="Amt"/>
+				</xsd:choice>
+				<xsd:element ref="GNRdmtn"/>
+				<xsd:element ref="SysPlanFund" maxOccurs="10"/>
+				<xsd:choice>
+					<xsd:element ref="BkInfo"/>
+					<xsd:element ref="RIFRedirect"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RIFRedirect">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="FundAcctID"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RspnSrc">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="I"/>
+				<xsd:enumeration value="F"/>
+				<xsd:enumeration value="N"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="RtnCode">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="00"/>
+				<xsd:enumeration value="01"/>
+				<xsd:enumeration value="98"/>
+				<xsd:enumeration value="99"/>
+				<xsd:enumeration value="50"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SegInfo">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice>
+					<xsd:element ref="CopyOwner"/>
+					<xsd:element ref="Annuitant"/>
+				</xsd:choice>
+				<xsd:element ref="MatureDate" minOccurs="0"/>
+				<xsd:element ref="JurProv"/>
+				<xsd:choice minOccurs="0">
+					<xsd:element ref="JntAnnuitant"/>
+					<xsd:element ref="SucsrAnnuitant"/>
+				</xsd:choice>
+				<xsd:element ref="SucsrOwner" minOccurs="0"/>
+				<xsd:element ref="PrimDthBenDtl" minOccurs="0"/>
+				<xsd:element ref="CntgtDthBenDtl" minOccurs="0"/>
+				<xsd:element ref="LIB" minOccurs="0"/>
+				<xsd:element ref="DthBnftGua" minOccurs="0"/>
+				<xsd:element ref="MatGua" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SegTrnsfr">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PrimDthBenDtl"/>
+				<xsd:element ref="CntgtDthBenDtl" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Sell">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TrxnTyp"/>
+				<xsd:element ref="TrxnTypDtl" minOccurs="0"/>
+				<xsd:element ref="FundID"/>
+				<xsd:element ref="Amt"/>
+				<xsd:element ref="GNRdmtn"/>
+				<xsd:element ref="FedWHoldTaxRt" minOccurs="0"/>
+				<xsd:element ref="SettlMethd"/>
+				<xsd:element ref="SettlSrc"/>
+				<xsd:element ref="CntbWdCode" minOccurs="0"/>
+				<xsd:choice minOccurs="0">
+					<xsd:element ref="ChequeInfo"/>
+					<xsd:element ref="PayInstrc"/>
+				</xsd:choice>
+				<xsd:element ref="MgmtSpfc" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SettlMethd">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="1"/>
+				<xsd:enumeration value="2"/>
+				<xsd:enumeration value="3"/>
+				<xsd:enumeration value="4"/>
+				<xsd:enumeration value="5"/>
+				<xsd:enumeration value="6"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SettlSrc">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="I"/>
+				<xsd:enumeration value="F"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Src">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="SrcType"/>
+				<xsd:choice>
+					<xsd:element ref="DlrCode"/>
+					<xsd:element ref="MgmtCode"/>
+					<xsd:element ref="IntCode"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SrcType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="I"/>
+				<xsd:enumeration value="F"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Spousal">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SucsrAnnuitant">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SucsrOwner">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Switch">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TrxnTyp"/>
+				<xsd:element ref="TrxnTypDtl"/>
+				<xsd:element ref="FundID"/>
+				<xsd:element ref="FrmFundID"/>
+				<xsd:element ref="Amt"/>
+				<xsd:element ref="GNRdmtn"/>
+				<xsd:element ref="TaxCode"/>
+				<xsd:element ref="ClientComm" minOccurs="0"/>
+				<xsd:element ref="CertInd" minOccurs="0"/>
+				<xsd:element ref="DivOpt" minOccurs="0"/>
+				<xsd:element ref="Payment" minOccurs="0"/>
+				<xsd:element ref="FeeInfo" minOccurs="0"/>
+				<xsd:element ref="MgmtSpfc" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SysPlanFund">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="FundID"/>
+				<xsd:element ref="SysPlanSplit"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Target">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TargetType"/>
+				<xsd:choice>
+					<xsd:element ref="DlrCode"/>
+					<xsd:element ref="MgmtCode"/>
+					<xsd:element ref="IntCode"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="TargetType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="I"/>
+				<xsd:enumeration value="F"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TaxCalcFlg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DOBType"/>
+				<xsd:element ref="BirthDate"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="TaxEvnt">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="D"/>
+				<xsd:enumeration value="N"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TFSASucsr">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ClientInfo"/>
+				<xsd:element ref="Address" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="TitleCode">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="1"/>
+				<xsd:enumeration value="2"/>
+				<xsd:enumeration value="3"/>
+				<xsd:enumeration value="4"/>
+				<xsd:enumeration value="5"/>
+				<xsd:enumeration value="6"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ToAcctDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="FundAcctID" minOccurs="0"/>
+				<xsd:element ref="CntbWdCode" minOccurs="0"/>
+				<xsd:element ref="CntbPd" minOccurs="0"/>
+				<xsd:element ref="ToInvstDtl" maxOccurs="10"/>
+				<xsd:element ref="MgmtSpfc" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ToInvstDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="FundID"/>
+				<xsd:element ref="ClientComm" minOccurs="0"/>
+				<xsd:element ref="CertInd" minOccurs="0"/>
+				<xsd:element ref="Amt"/>
+				<xsd:element ref="DivOpt" minOccurs="0"/>
+				<xsd:element ref="Payment" minOccurs="0"/>
+				<xsd:element ref="FeeInfo" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="TotCorrectn">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:pattern value="(0[2-9]|1[0])"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="Trnsfr">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TrxnTyp"/>
+				<xsd:element ref="TrxnTypDtl"/>
+				<xsd:element ref="FundID"/>
+				<xsd:element ref="FrmAcct"/>
+				<xsd:element ref="OwnerSIN" minOccurs="0" maxOccurs="2"/>
+				<xsd:element ref="OwnerBirthDate" minOccurs="0"/>
+				<xsd:element ref="OrgFlg" minOccurs="0"/>
+				<xsd:element ref="FedBN" minOccurs="0"/>
+				<xsd:element ref="ProvBN" minOccurs="0"/>
+				<xsd:element ref="LckInJur" minOccurs="0"/>
+				<xsd:element ref="OrigNtwrk" minOccurs="0"/>
+				<xsd:element ref="Amt" minOccurs="0"/>
+				<xsd:element ref="GNRdmtn"/>
+				<xsd:element ref="TaxCode" minOccurs="0"/>
+				<xsd:element ref="TaxEvnt"/>
+				<xsd:element ref="DivOpt" minOccurs="0"/>
+				<xsd:element ref="Payment" minOccurs="0"/>
+				<xsd:element ref="CntbWdCode" minOccurs="0"/>
+				<xsd:element ref="CntbPd" minOccurs="0"/>
+				<xsd:element ref="RIFPymt" minOccurs="0"/>
+				<xsd:element ref="MgmtSpfc" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="TrxnDtl">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice>
+					<xsd:element ref="Buy"/>
+					<xsd:element ref="Sell"/>
+					<xsd:element ref="Switch"/>
+					<xsd:element ref="Trnsfr"/>
+					<xsd:element ref="ICT"/>
+				</xsd:choice>
+				<xsd:element ref="AOT" minOccurs="0"/>
+				<xsd:element ref="CDICData" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="TrxnRevn">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:pattern value="([0-9][1-9]|[1-9][0-9])"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TrxnTyp">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="4"/>
+				<xsd:enumeration value="5"/>
+				<xsd:enumeration value="6"/>
+				<xsd:enumeration value="8"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TrxnTypDtl">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="1"/>
+				<xsd:enumeration value="4"/>
+				<xsd:enumeration value="6"/>
+				<xsd:enumeration value="7"/>
+				<xsd:enumeration value="8"/>
+				<xsd:enumeration value="9"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="UCI">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:pattern value="[A-Z0-9_\./\\\-:;]{1,20}"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="UCIData">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="UCI"/>
+				<xsd:element ref="SIAIndividualFlg" minOccurs="0"/>
+				<xsd:element ref="InterestInDeposit" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Warning">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ErrorCode" maxOccurs="5"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

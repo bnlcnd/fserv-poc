@@ -1358,7 +1358,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_orderset.htm
-      additionalProperties: false
     OrdSetJson:
       type: object
       properties:
@@ -1371,7 +1370,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_orderset.htm
-      additionalProperties: false
     Msg:
       required:
       - MsgCreate
@@ -1388,7 +1386,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_msg.htm
-      additionalProperties: false
     MsgCreate:
       required:
       - Date
@@ -1408,7 +1405,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_msgcreate.htm
-      additionalProperties: false
     MsgType:
       type: object
       properties:
@@ -1419,7 +1415,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_msgtype.htm
-      additionalProperties: false
     Ntwrk:
       required:
       - NtwrkID
@@ -1444,7 +1439,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_ntwrk.htm
-      additionalProperties: false
     Src:
       required:
       - SrcType
@@ -1459,19 +1453,20 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_src.htm
-      additionalProperties: false
     Date:
       type: string
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_date.htm
       example: '20221017'
+      pattern: ^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$
     Time:
       type: string
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_time.htm
       example: '180328'
+      pattern: ^(([0-1][0-9]|2[0-3])[0-5][0-9][0-5][0-9])$
     OrdID:
       type: string
       externalDocs:
@@ -1530,11 +1525,10 @@ components:
         TargetType:
           $ref: '#/components/schemas/TargetType'
         MgmtCode:
-          $ref: '#/components/schemas/MgmtCodeType'
+          $ref: '#/components/schemas/MgmtCode'
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_target.htm
-      additionalProperties: false
     TargetType:
       type: string
       description: Note the TargetType will always = F.
@@ -1542,10 +1536,6 @@ components:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_targettype.htm
       example: F
-      enum:
-      - D
-      - I
-      - F
     OrdReq:
       required:
       - ActnCode
@@ -1574,7 +1564,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_ordreq.htm
-      additionalProperties: false
     OrdRspn:
       required:
       - ActnCode
@@ -1616,7 +1605,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_ordrspn.htm
-      additionalProperties: false
     Reject:
       type: object
       properties:
@@ -1625,7 +1613,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_reject.htm
-      additionalProperties: false
     Warning:
       type: object
       properties:
@@ -1634,7 +1621,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_warning.htm
-      additionalProperties: false
     NotSupprtd:
       type: object
       properties:
@@ -1643,7 +1629,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_notsupprtd.htm
-      additionalProperties: false
     DocReqdFlg:
       type: string
       externalDocs:
@@ -1678,7 +1663,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_orddtl.htm
-      additionalProperties: false
     AcctLookup:
       required:
       - MgmtCode
@@ -1687,15 +1671,14 @@ components:
       type: object
       properties:
         MgmtCode:
-          $ref: '#/components/schemas/MgmtCodeType'
+          $ref: '#/components/schemas/MgmtCode'
         FundAcctID:
           $ref: '#/components/schemas/String15'
         AcctDesig:
-          $ref: '#/components/schemas/AcctDesigType'
+          $ref: '#/components/schemas/AcctDesig'
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_acctlookup.htm
-      additionalProperties: false
     TrxnDtl:
       required:
       - Switch
@@ -1708,7 +1691,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_trxndet.htm
-      additionalProperties: false
     CDICData:
       required:
       - UCIData
@@ -1721,7 +1703,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_cdicdata.htm
-      additionalProperties: false
     UCIData:
       required:
       - UCI
@@ -1736,7 +1717,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_UCIdata.htm
-      additionalProperties: false
     LEI:
       type: string
       externalDocs:
@@ -1801,7 +1781,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_switch.htm
-      additionalProperties: false
     Amt:
       required:
       - AmtType
@@ -1814,7 +1793,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_amt.htm
-      additionalProperties: false
     AmtType:
       type: string
       enum:
@@ -1850,7 +1828,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_feeinfo.htm
-      additionalProperties: false
     FeeRate:
       type: string
       externalDocs:
@@ -1873,7 +1850,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_payment.htm
-      additionalProperties: false
     BkInfo:
       required:
       - InstutNum
@@ -1897,7 +1873,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_bkinfo.htm
-      additionalProperties: false
     InstutNum:
       type: string
       externalDocs:
@@ -1916,11 +1891,6 @@ components:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_bkaccttype.htm
       example: S
-      enum:
-      - C
-      - O
-      - S
-      description: Bank account type
     BkAcctNum:
       type: string
       externalDocs:
@@ -1933,14 +1903,20 @@ components:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_currency.htm
       example: '01'
-      pattern: ^\d{2}$
-      description: 2-digit currency code
+      enum:
+      - '00'
+      - '01'
+      - '02'
+      - '03'
     Holder:
       type: string
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_holder.htm
       example: BOB JONES
+      minLength: 1
+      maxLength: 40
+      pattern: ^[^\s]+(\s+[^\s]+)*$
     ChequeInfo:
       required:
       - Payee
@@ -1956,7 +1932,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_chequeinfo.htm
-      additionalProperties: false
     Payee:
       type: string
       externalDocs:
@@ -1967,7 +1942,6 @@ components:
       - A
       - B
       - D
-      description: Payee designation
     Name:
       type: object
       properties:
@@ -1982,7 +1956,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_name.htm
-      additionalProperties: false
     OrgName:
       type: string
       externalDocs:
@@ -2027,7 +2000,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_address.htm
-      additionalProperties: false
     AddressLn:
       type: string
       externalDocs:
@@ -2040,6 +2012,9 @@ components:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_city.htm
       example: TORONTO
+      minLength: 1
+      maxLength: 30
+      pattern: ^[^\s]+(\s+[^\s]+)*$
     ProvState:
       type: string
       externalDocs:
@@ -2052,6 +2027,7 @@ components:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_country.htm
       example: CAN
+      pattern: ^[A-Z]{3}$
     PostalZip:
       type: string
       externalDocs:
@@ -2122,18 +2098,12 @@ components:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_ntwrkid.htm
       example: FSRV
-      enum:
-      - FSRV
-      - NSM9
-      description: Network identifier
     TrxnRevn:
       type: string
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_trxnrevn.htm
       example: TrxnRevn
-      pattern: ^([0-9][1-9]|[1-9][0-9])$
-      description: Transaction revision number
     FundAcctID:
       type: string
       externalDocs:
@@ -2152,24 +2122,12 @@ components:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_trxntypdtl.htm
       example: '1'
-      enum:
-      - '1'
-      - '4'
-      - '6'
-      - '7'
-      - '8'
-      - '9'
-      description: Transaction type detail
     GNRdmtn:
       type: string
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_gnrdmtn.htm
       example: N
-      enum:
-      - G
-      - N
-      description: Gross/Net redemption indicator
     TaxCode:
       type: string
       externalDocs:
@@ -2188,10 +2146,6 @@ components:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_certind.htm
       example: Y
-      enum:
-      - C
-      - R
-      description: Certificate indicator
     DivOpt:
       type: string
       externalDocs:
@@ -2228,7 +2182,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_errorset.htm
-      additionalProperties: false
     ErrorSetJson:
       type: object
       properties:
@@ -2239,7 +2192,6 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_errorset.htm
-      additionalProperties: false
     RspnSrc:
       type: string
       enum:
@@ -2279,74 +2231,62 @@ components:
       externalDocs:
         description: Review in Standards Helpfile
         url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_ntwrkerror.htm
-      additionalProperties: false
+    Yes1:
+      type: string
+      enum:
+      - Y
+    String15:
+      type: string
+      maxLength: 15
+      minLength: 1
+      pattern: ^[^\s]+(\s+[^\s]+)*$
+    Amt9V2N:
+      type: string
+      pattern: ^-?\d{1,9}\.\d{2}$
+    Alpha3To4:
+      type: string
+      pattern: ^[A-Z]{3,4}$
+    String5To7:
+      type: string
+      maxLength: 7
+      minLength: 5
+      pattern: ^[^\s]+(\s+[^\s]+)*$
+    Time6:
+      type: string
+      pattern: ^(([0-1][0-9]|2[0-3])[0-5][0-9][0-5][0-9])$
+    Date8:
+      type: string
+      pattern: ^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$
+    Integer5:
+      type: string
+      pattern: ^\d{5}$
+    String3To5:
+      type: string
+      maxLength: 5
+      minLength: 3
+      pattern: ^[^\s]+(\s+[^\s]+)*$
+    Integer3:
+      type: string
+      pattern: ^\d{3}$
     YesNo1:
       type: string
       enum:
       - Y
       - N
-      description: Yes/No flag
-    Alpha3To4:
-      type: string
-      pattern: ^[A-Z]{3,4}$
-      description: 3-4 uppercase letters
-    Date8:
-      type: string
-      pattern: ^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]|[0-9][1-9][0-9]{2}|[1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$
-      description: Date in YYYYMMDD format with validation
-      example: '20241017'
-    AlphaNum1To5:
-      type: string
-      pattern: ^[A-Z0-9]{1,5}$
-      description: 1-5 alphanumeric characters
-    Length4:
-      type: string
-      pattern: ^[A-Z0-9]{4}$
-      description: 4-character alphanumeric string
-    String15:
-      type: string
-      minLength: 1
-      maxLength: 15
-      pattern: ^[^\s]+(\s+[^\s]+)*$
-      description: String with maximum 15 characters
-    Amt9V2N:
-      type: string
-      pattern: ^-?\d{1,9}\.\d{2}$
-      description: Amount with up to 9 digits before decimal and 2 after, optional negative
-    Time6:
-      type: string
-      pattern: ^([0-1][0-9]|2[0-3])[0-5][0-9][0-5][0-9]$
-      description: Time in HHMMSS format
-      example: '180328'
-    String3To5:
-      type: string
-      minLength: 3
-      maxLength: 5
-      pattern: ^[^\s]+(\s+[^\s]+)*$
-      description: String with length 3-5 characters
-    Yes1:
-      type: string
-      enum:
-      - Y
-      description: Single Yes flag
-    Percent2V3:
-      type: string
-      pattern: ^\d{1,2}\.\d{3}$
-      description: Percentage with up to 2 digits before and 3 after decimal
     Value14:
       type: string
       pattern: ^\d{1,9}\.\d{2,4}$
-      description: Decimal value with up to 9 digits before and 2-4 after decimal
-    String5To7:
+    Length4:
       type: string
-      minLength: 5
-      maxLength: 7
+      minLength: 4
+      maxLength: 4
       pattern: ^[^\s]+(\s+[^\s]+)*$
-      description: String with length 5-7 characters
-    MgmtCodeType:
+    AlphaNum1To5:
       type: string
-      pattern: ^[A-Z][A-Z]([A-Z]|[0-9])$
-      description: Management code - 2 letters followed by letter or digit
+      pattern: ^[A-Z0-9]{1,5}$
+    Percent2V3:
+      type: string
+      pattern: ^\d{1,2}\.\d{3}$
     AcctDesigType:
       type: string
       enum:
