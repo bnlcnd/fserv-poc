@@ -1,0 +1,1977 @@
+openapi: 3.0.1
+info:
+  title: Trading - Manufacturer Order Inquiry API
+  description: 'The Manufacturer Order Inquiry API is used by a fund manufacturer to retrieve order(s) from Fundserv. Manufacturers can query using the order key fields or Correlation ID to get a single order. If they query using just their Management Code, they will get a list of pending orders. Only order transactions that the manufacturer has subscribed to will be included in the list of pending orders.'
+  version: v1
+servers:
+  - url: https://apisandbox.fundserv.com/trading/manufacturer/inquiry-mock/v1
+paths:
+  /orders:
+    get:
+      tags:
+        - Manufacturer Order Inquiry
+      summary: Retrieve a single order or list of pending orders from TFS.
+      description: Retrieve a single order or list of pending orders from TFS.
+      operationId: retrieveListOrderDetailsAPI
+      parameters:
+        - name: MgmtCode
+          in: query
+          description: Identifies the Management Company Code. MgmtCode is required and must be a valid Fundserv code.
+          required: true
+          schema:
+            type: string
+        - name: ActnCode
+          in: query
+          description: Identifies the Action Code. ActnCode must be one of the enumerated values.
+          schema:
+            type: string
+        - name: DlrCode
+          in: query
+          description: Identifies the Dealer Code. DlrCode must be a valid Fundserv code.
+          schema:
+            type: string
+        - name: IntCode
+          in: query
+          description: Identifies the Intermediary Code. Must be a valid Fundserv code.
+          schema:
+            type: string
+        - name: SrcID
+          in: query
+          description: Identifies the Source Identifier. SrcID must match length and pattern requirements.
+          schema:
+            type: string
+        - name: OrderSrcType
+          in: query
+          description: Identifies the party that placed the order. Must be one of the enumerated values.
+          schema:
+            type: string
+        - name: TrxnRevn
+          in: query
+          description: Identifies the Transaction Revision Number. Required if ActnCode = CHG.
+          schema:
+            type: string
+        - name: CorrlatnID
+          in: query
+          description: Identifies the Correlation ID returned in the Order Ackowledgement when an order is submitted via API.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrdSetJson'
+              examples:
+                OrdSetExample:
+                  summary: an example of OrdSet
+                  value:
+                    OrdSet:
+                      Msg:
+                        - MsgCreate:
+                            Date: '20230503'
+                            Time: '151233'
+                            Src:
+                              SrcType: D
+                              DlrCode: '2804'
+                            Target:
+                              TargetType: F
+                              MgmtCode: YTA
+                          Ntwrk:
+                            NtwrkID: NSM9
+                            Date: '20230503'
+                            Time: '120857'
+                            TradeDate: '20230503'
+                            SettlDate: '20230504'
+                          MsgType:
+                            OrdReq:
+                              ActnCode: NEW
+                              SrcID: '12345634222'
+                              RepCode: RER5
+                              ClerkID: '123'
+                              OrdDtl:
+                                AcctLookup:
+                                  AcctDesig: '2'
+                                  MgmtCode: YTA
+                                  FundAcctID: '345678777'
+                              TrxnDtl:
+                                Switch:
+                                  TrxnTyp: '8'
+                                  TrxnTypDtl: '1'
+                                  FundID: '125'
+                                  FrmFundID: '234'
+                                  Amt:
+                                    AmtType: D
+                                    AmtValue: '25.75'
+                                  GNRdmtn: G
+                                  TaxCode: CAN
+                      Version: '35'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/OrdSet'
+              examples:
+                OrdSetExample:
+                  summary: an example of OrdSet
+                  value: <?xml version="1.0" encoding="UTF-8"?> <OrdSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="tfs tfs.xsd" xmlns="tfs" version="35"> <Msg> <MsgCreate> <Date>20231017</Date> <Time>180328</Time> <Src> <SrcType>D</SrcType> <DlrCode>2804</DlrCode> </Src> <Target> <TargetType>F</TargetType> <MgmtCode>YTA</MgmtCode> </Target> </MsgCreate> <Ntwrk> <NtwrkID>FSRV</NtwrkID> <Date>20231017</Date> <Time>180328</Time> <OrdID>1234567</OrdID> <TradeDate>20231017</TradeDate> <SettlDate>20231018</SettlDate> </Ntwrk> <MsgType> <OrdReq> <ActnCode>NEW</ActnCode> <SrcID>200506140000001</SrcID> <RepCode>JIM</RepCode> <OrdDtl> <AcctLookup> <MgmtCode>YTA</MgmtCode> <FundAcctID>111111111111111</FundAcctID> <AcctDesig>2</AcctDesig> </AcctLookup> <TrxnDtl> <Switch> <TrxnTyp>8</TrxnTyp> <TrxnTypDtl>1</TrxnTypDtl> <FundID>100</FundID> <FrmFundID>150</FrmFundID> <Amt> <AmtType>D</AmtType> <AmtValue>100.00</AmtValue> </Amt> <GNRdmtn>G</GNRdmtn> <TaxCode>CAN</TaxCode> </Switch> </TrxnDtl> </OrdDtl> </OrdReq> </MsgType> </Msg> </OrdSet>
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSetJson'
+              example:
+                NtwrkError:
+                  - RspnSrc: N
+                    RtnCode: '99'
+                    ErrorCode: string
+                    CorrlatnID: 414D51205446534C514D32202020202028E4756304458424
+                    OrdID: '1234567'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorSet'
+              example: <ErrorSet> <xmlns_x003A_xsi>http://www.w3.org/2001/XMLSchema-instance</xmlns_x003A_xsi> <xsi_x003A_schemaLocation>tfs tfs.xsd</xsi_x003A_schemaLocation> <xmlns>tfs</xmlns> <NtwrkError> <RspnSrc>N</RspnSrc> <RtnCode>99</RtnCode> <ErrorCode>string</ErrorCode> <CorrlatnID>414D51205446534C514D32202020202028E4756304458424</CorrlatnID> <OrdID>1234567</OrdID> </NtwrkError> </ErrorSet>
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrdSetJson'
+              example:
+                Msg:
+                  - MsgCreate:
+                      Date: '20221017'
+                      Time: '180328'
+                      Src:
+                        SrcType: D
+                        DlrCode: '2804'
+                        IntCode: TEAA
+                      Target:
+                        TargetType: F
+                        MgmtCode: YTA
+                    Ntwrk:
+                      NtwrkID: FSRV
+                      Date: '20221017'
+                      Time: '180328'
+                      OrdID: '1234567'
+                      TradeDate: '20221017'
+                      SettlDate: '20221017'
+                    MsgType:
+                      OrdReq:
+                        ActnCode: NEW
+                        SrcID: ABIA83850331112
+                        TrxnRevn: TrxnRevn
+                        DlrCode: '2804'
+                        IntCode: TEAA
+                        ClerkID: SAM304
+                        RepCode: JJ11
+                        SupConfirm: Y
+                        DilSrc: D
+                        DilLink:
+                          DilLinkID: A123456
+                          CorrectnNum: '12'
+                          TotCorrectn: '99'
+                        OrdDtl:
+                          AcctLookup:
+                            MgmtCode: YTA
+                            FundAcctID: '123212345678'
+                            AcctDesig: '2'
+                          AcctSetup:
+                            Dlr:
+                              DlrCode: '2804'
+                              RepCode: JJ11
+                              DlrAcctID: '123212345678'
+                            Int:
+                              IntCode: TEAA
+                              IntAcctID: '123212345678'
+                            AcctInfo:
+                              AcctDesig: '2'
+                              AcctType: '17'
+                              AcctTypeDtl: D
+                              RecipCode: '1'
+                              TaxCode: CAN
+                              Group:
+                                GroupFlg: D
+                                GroupID: '56784399'
+                              TaxCalcFlg:
+                                DOBType: B
+                                BirthDate: '19761123'
+                              SpousalFlg: Y
+                              LckdInCode: L
+                              MgmtSpfc: string
+                              eDeliverFlg: Y
+                            Owner:
+                              ClientInfo:
+                                Individual:
+                                  TitleCode: '1'
+                                  LastName: SMITH
+                                  FirstName: JOHN
+                                  SIN: 99999998
+                                  BirthDate: '19761123'
+                                  Gender: F
+                                Org:
+                                  OrgName: MY COMPANY INC
+                                  FedBN: R12345678
+                                  ProvBN: '1234567899'
+                                Language: F
+                                Email: JON@COMP.CA
+                              Address:
+                                AddressLn: 12 OAK AVE
+                                City: TORONTO
+                                ProvState: 'true'
+                                Country: CAN
+                                PostalZip: M4G1L1
+                              RDSPRel: '02'
+                              IDVerify:
+                                IDType: A
+                                OtherDscrp: PHOTO CARD
+                                IDNum: BT3026789
+                                PlaceIssue:
+                                  Country: CAN
+                                  ProvState: 'true'
+                              ForeignPerson:
+                                IndividualTIN:
+                                  - Country: CAN
+                                    EffectDate: '20241212'
+                                    PersonStatus: R
+                                    TIN: '99999998'
+                                    NoTINReasonCode: '1'
+                              ForeignEntity:
+                                OrganizationTIN:
+                                  - Country: CAN
+                                    EffectDate: '20241212'
+                                    TINType: PASSPORT
+                                    TIN: '99999998'
+                                    NoTINReasonCode: '1'
+                                    FATCAClassification: S
+                                    CRSClassification: CRS101
+                                GIIN: 0FN69V.00219.SF.391
+                                ControllingPerson:
+                                  - ControllingPersonType: CRS801
+                                    LastName: SMITH
+                                    FirstName: JOHN
+                                    BirthDate: '19761123'
+                                    SIN: 99999998
+                                    Address:
+                                      AddressLn: 12 OAK AVE
+                                      City: TORONTO
+                                      ProvState: 'true'
+                                      Country: CAN
+                                      PostalZip: M4G1L1
+                                    ForeignPerson:
+                                      IndividualTIN:
+                                        - Country: CAN
+                                          EffectDate: '20241212'
+                                          PersonStatus: R
+                                          TIN: '99999998'
+                                          NoTINReasonCode: '1'
+                            Jnt:
+                              JntSurType: J
+                              JntSigType: A
+                              JntOwner:
+                                - ClientInfo:
+                                    Individual:
+                                      TitleCode: '1'
+                                      LastName: SMITH
+                                      FirstName: JOHN
+                                      SIN: 99999998
+                                      BirthDate: '19761123'
+                                      Gender: F
+                                    Org:
+                                      OrgName: MY COMPANY INC
+                                      FedBN: R12345678
+                                      ProvBN: '1234567899'
+                                    Language: F
+                                    Email: JON@COMP.CA
+                                  Address:
+                                    AddressLn: 12 OAK AVE
+                                    City: TORONTO
+                                    ProvState: 'true'
+                                    Country: CAN
+                                    PostalZip: M4G1L1
+                                  RDSPRel: '02'
+                                  IDVerify:
+                                    IDType: A
+                                    OtherDscrp: PHOTO CARD
+                                    IDNum: BT3026789
+                                    PlaceIssue:
+                                      Country: CAN
+                                      ProvState: 'true'
+                                  ForeignPerson:
+                                    IndividualTIN:
+                                      - Country: CAN
+                                        EffectDate: '20241212'
+                                        PersonStatus: R
+                                        TIN: '99999998'
+                                        NoTINReasonCode: '1'
+                            Spousal:
+                              ClientInfo:
+                                Individual:
+                                  TitleCode: '1'
+                                  LastName: SMITH
+                                  FirstName: JOHN
+                                  SIN: 99999998
+                                  BirthDate: '19761123'
+                                  Gender: F
+                                Org:
+                                  OrgName: MY COMPANY INC
+                                  FedBN: R12345678
+                                  ProvBN: '1234567899'
+                                Language: F
+                                Email: JON@COMP.CA
+                              Address:
+                                AddressLn: 12 OAK AVE
+                                City: TORONTO
+                                ProvState: 'true'
+                                Country: CAN
+                                PostalZip: M4G1L1
+                            ITF:
+                              ITFBen:
+                                ClientInfo:
+                                  Individual:
+                                    TitleCode: '1'
+                                    LastName: SMITH
+                                    FirstName: JOHN
+                                    SIN: 99999998
+                                    BirthDate: '19761123'
+                                    Gender: F
+                                  Org:
+                                    OrgName: MY COMPANY INC
+                                    FedBN: R12345678
+                                    ProvBN: '1234567899'
+                                  Language: F
+                                  Email: JON@COMP.CA
+                                ForeignPerson:
+                                  IndividualTIN:
+                                    - Country: CAN
+                                      EffectDate: '20241212'
+                                      PersonStatus: R
+                                      TIN: '99999998'
+                                      NoTINReasonCode: '1'
+                                ForeignEntity:
+                                  OrganizationTIN:
+                                    - Country: CAN
+                                      EffectDate: '20241212'
+                                      TINType: PASSPORT
+                                      TIN: '99999998'
+                                      NoTINReasonCode: '1'
+                                      FATCAClassification: S
+                                      CRSClassification: CRS101
+                                  GIIN: 0FN69V.00219.SF.391
+                                  ControllingPerson:
+                                    - ControllingPersonType: CRS801
+                                      LastName: SMITH
+                                      FirstName: JOHN
+                                      BirthDate: '19761123'
+                                      SIN: 99999998
+                                      Address:
+                                        AddressLn: 12 OAK AVE
+                                        City: TORONTO
+                                        ProvState: 'true'
+                                        Country: CAN
+                                        PostalZip: M4G1L1
+                                      ForeignPerson:
+                                        IndividualTIN:
+                                          - Country: CAN
+                                            EffectDate: '20241212'
+                                            PersonStatus: R
+                                            TIN: '99999998'
+                                            NoTINReasonCode: '1'
+                            RESPBenDtl:
+                              RESPBen:
+                                - BenRel: '11'
+                                  BenSplit: '33.333'
+                                  ClientInfo:
+                                    Individual:
+                                      TitleCode: '1'
+                                      LastName: SMITH
+                                      FirstName: JOHN
+                                      SIN: 99999998
+                                      BirthDate: '19761123'
+                                      Gender: F
+                                    Org:
+                                      OrgName: MY COMPANY INC
+                                      FedBN: R12345678
+                                      ProvBN: '1234567899'
+                                    Language: F
+                                    Email: JON@COMP.CA
+                                  CopyAddrss: Y
+                                  Address:
+                                    AddressLn: 12 OAK AVE
+                                    City: TORONTO
+                                    ProvState: 'true'
+                                    Country: CAN
+                                    PostalZip: M4G1L1
+                                  FATCAClassification: S
+                                  CRSClassification: CRS101
+                            DthBenDtl:
+                              Estate: Y
+                              DthBen:
+                                - BenType: '1'
+                                  BenRel: '11'
+                                  BenSplit: '33.333'
+                                  ClientInfo:
+                                    Individual:
+                                      TitleCode: '1'
+                                      LastName: SMITH
+                                      FirstName: JOHN
+                                      SIN: 99999998
+                                      BirthDate: '19761123'
+                                      Gender: F
+                                    Org:
+                                      OrgName: MY COMPANY INC
+                                      FedBN: R12345678
+                                      ProvBN: '1234567899'
+                                    Language: F
+                                    Email: JON@COMP.CA
+                                  Address:
+                                    AddressLn: 12 OAK AVE
+                                    City: TORONTO
+                                    ProvState: 'true'
+                                    Country: CAN
+                                    PostalZip: M4G1L1
+                            RDSPBenDtl:
+                              RDSPBen:
+                                ClientInfo:
+                                  Individual:
+                                    TitleCode: '1'
+                                    LastName: SMITH
+                                    FirstName: JOHN
+                                    SIN: 99999998
+                                    BirthDate: '19761123'
+                                    Gender: F
+                                  Org:
+                                    OrgName: MY COMPANY INC
+                                    FedBN: R12345678
+                                    ProvBN: '1234567899'
+                                  Language: F
+                                  Email: JON@COMP.CA
+                                Address:
+                                  AddressLn: 12 OAK AVE
+                                  City: TORONTO
+                                  ProvState: 'true'
+                                  Country: CAN
+                                  PostalZip: M4G1L1
+                            TFSASucsr:
+                              ClientInfo:
+                                Individual:
+                                  TitleCode: '1'
+                                  LastName: SMITH
+                                  FirstName: JOHN
+                                  SIN: 99999998
+                                  BirthDate: '19761123'
+                                  Gender: F
+                                Org:
+                                  OrgName: MY COMPANY INC
+                                  FedBN: R12345678
+                                  ProvBN: '1234567899'
+                                Language: F
+                                Email: JON@COMP.CA
+                              Address:
+                                AddressLn: 12 OAK AVE
+                                City: TORONTO
+                                ProvState: 'true'
+                                Country: CAN
+                                PostalZip: M4G1L1
+                            SegInfo:
+                              CopyOwner: Y
+                              Annuitant:
+                                ClientInfo:
+                                  Individual:
+                                    TitleCode: '1'
+                                    LastName: SMITH
+                                    FirstName: JOHN
+                                    SIN: 99999998
+                                    BirthDate: '19761123'
+                                    Gender: F
+                                  Org:
+                                    OrgName: MY COMPANY INC
+                                    FedBN: R12345678
+                                    ProvBN: '1234567899'
+                                  Language: F
+                                  Email: JON@COMP.CA
+                                Address:
+                                  AddressLn: 12 OAK AVE
+                                  City: TORONTO
+                                  ProvState: 'true'
+                                  Country: CAN
+                                  PostalZip: M4G1L1
+                              MatureDate: '20241212'
+                              JurProv: BC
+                              JntAnnuitant:
+                                AnnuitantConDtl: '1'
+                                ClientInfo:
+                                  Individual:
+                                    TitleCode: '1'
+                                    LastName: SMITH
+                                    FirstName: JOHN
+                                    SIN: 99999998
+                                    BirthDate: '19761123'
+                                    Gender: F
+                                  Org:
+                                    OrgName: MY COMPANY INC
+                                    FedBN: R12345678
+                                    ProvBN: '1234567899'
+                                  Language: F
+                                  Email: JON@COMP.CA
+                                Address:
+                                  AddressLn: 12 OAK AVE
+                                  City: TORONTO
+                                  ProvState: 'true'
+                                  Country: CAN
+                                  PostalZip: M4G1L1
+                              SucsrAnnuitant:
+                                ClientInfo:
+                                  Individual:
+                                    TitleCode: '1'
+                                    LastName: SMITH
+                                    FirstName: JOHN
+                                    SIN: 99999998
+                                    BirthDate: '19761123'
+                                    Gender: F
+                                  Org:
+                                    OrgName: MY COMPANY INC
+                                    FedBN: R12345678
+                                    ProvBN: '1234567899'
+                                  Language: F
+                                  Email: JON@COMP.CA
+                                Address:
+                                  AddressLn: 12 OAK AVE
+                                  City: TORONTO
+                                  ProvState: 'true'
+                                  Country: CAN
+                                  PostalZip: M4G1L1
+                              SucsrOwner:
+                                ClientInfo:
+                                  Individual:
+                                    TitleCode: '1'
+                                    LastName: SMITH
+                                    FirstName: JOHN
+                                    SIN: 99999998
+                                    BirthDate: '19761123'
+                                    Gender: F
+                                  Org:
+                                    OrgName: MY COMPANY INC
+                                    FedBN: R12345678
+                                    ProvBN: '1234567899'
+                                  Language: F
+                                  Email: JON@COMP.CA
+                                Address:
+                                  AddressLn: 12 OAK AVE
+                                  City: TORONTO
+                                  ProvState: 'true'
+                                  Country: CAN
+                                  PostalZip: M4G1L1
+                              PrimDthBenDtl:
+                                EstateSplit: '33.333'
+                                PrimDthBen:
+                                  - BenType: '1'
+                                    BenRel: '11'
+                                    BenSplit: '33.333'
+                                    ClientInfo:
+                                      Individual:
+                                        TitleCode: '1'
+                                        LastName: SMITH
+                                        FirstName: JOHN
+                                        SIN: 99999998
+                                        BirthDate: '19761123'
+                                        Gender: F
+                                      Org:
+                                        OrgName: MY COMPANY INC
+                                        FedBN: R12345678
+                                        ProvBN: '1234567899'
+                                      Language: F
+                                      Email: JON@COMP.CA
+                                    Address:
+                                      AddressLn: 12 OAK AVE
+                                      City: TORONTO
+                                      ProvState: 'true'
+                                      Country: CAN
+                                      PostalZip: M4G1L1
+                                    ConPrimDthBen:
+                                      - BenType: '1'
+                                        BenRel: '11'
+                                        BenSplit: '33.333'
+                                        ClientInfo:
+                                          Individual:
+                                            TitleCode: '1'
+                                            LastName: SMITH
+                                            FirstName: JOHN
+                                            SIN: 99999998
+                                            BirthDate: '19761123'
+                                            Gender: F
+                                          Org:
+                                            OrgName: MY COMPANY INC
+                                            FedBN: R12345678
+                                            ProvBN: '1234567899'
+                                          Language: F
+                                          Email: JON@COMP.CA
+                                        Address:
+                                          AddressLn: 12 OAK AVE
+                                          City: TORONTO
+                                          ProvState: 'true'
+                                          Country: CAN
+                                          PostalZip: M4G1L1
+                              CntgtDthBenDtl:
+                                DthBen:
+                                  - BenType: '1'
+                                    BenRel: '11'
+                                    BenSplit: '33.333'
+                                    ClientInfo:
+                                      Individual:
+                                        TitleCode: '1'
+                                        LastName: SMITH
+                                        FirstName: JOHN
+                                        SIN: 99999998
+                                        BirthDate: '19761123'
+                                        Gender: F
+                                      Org:
+                                        OrgName: MY COMPANY INC
+                                        FedBN: R12345678
+                                        ProvBN: '1234567899'
+                                      Language: F
+                                      Email: JON@COMP.CA
+                                    Address:
+                                      AddressLn: 12 OAK AVE
+                                      City: TORONTO
+                                      ProvState: 'true'
+                                      Country: CAN
+                                      PostalZip: M4G1L1
+                              LIB:
+                                LIBOpt: S
+                                LIBFund: '123'
+                              DthBnftGua:
+                                DthBnftResetOpt: Y
+                                DthBnftResetFund: '123'
+                              MatGua:
+                                MatGuaResetOpt: Y
+                                MatGuaResetFund: '123'
+                            PrmCareGvrDtl:
+                              PrmCareGvr:
+                                - ClientInfo:
+                                    Individual:
+                                      TitleCode: '1'
+                                      LastName: SMITH
+                                      FirstName: JOHN
+                                      SIN: 99999998
+                                      BirthDate: '19761123'
+                                      Gender: F
+                                    Org:
+                                      OrgName: MY COMPANY INC
+                                      FedBN: R12345678
+                                      ProvBN: '1234567899'
+                                    Language: F
+                                    Email: JON@COMP.CA
+                          AcctTrnsfr:
+                            MgmtCode: YTA
+                            FundAcctID: '123212345678'
+                            AcctDesig: '2'
+                            DlrAcctID: '123212345678'
+                            AcctType: '17'
+                            IntAcctID: '123212345678'
+                            DthBenDtl:
+                              Estate: Y
+                              DthBen:
+                                - BenType: '1'
+                                  BenRel: '11'
+                                  BenSplit: '33.333'
+                                  ClientInfo:
+                                    Individual:
+                                      TitleCode: '1'
+                                      LastName: SMITH
+                                      FirstName: JOHN
+                                      SIN: 99999998
+                                      BirthDate: '19761123'
+                                      Gender: F
+                                    Org:
+                                      OrgName: MY COMPANY INC
+                                      FedBN: R12345678
+                                      ProvBN: '1234567899'
+                                    Language: F
+                                    Email: JON@COMP.CA
+                                  Address:
+                                    AddressLn: 12 OAK AVE
+                                    City: TORONTO
+                                    ProvState: 'true'
+                                    Country: CAN
+                                    PostalZip: M4G1L1
+                            SegTrnsfr:
+                              PrimDthBenDtl:
+                                EstateSplit: '33.333'
+                                PrimDthBen:
+                                  - BenType: '1'
+                                    BenRel: '11'
+                                    BenSplit: '33.333'
+                                    ClientInfo:
+                                      Individual:
+                                        TitleCode: '1'
+                                        LastName: SMITH
+                                        FirstName: JOHN
+                                        SIN: 99999998
+                                        BirthDate: '19761123'
+                                        Gender: F
+                                      Org:
+                                        OrgName: MY COMPANY INC
+                                        FedBN: R12345678
+                                        ProvBN: '1234567899'
+                                      Language: F
+                                      Email: JON@COMP.CA
+                                    Address:
+                                      AddressLn: 12 OAK AVE
+                                      City: TORONTO
+                                      ProvState: 'true'
+                                      Country: CAN
+                                      PostalZip: M4G1L1
+                                    ConPrimDthBen:
+                                      - BenType: '1'
+                                        BenRel: '11'
+                                        BenSplit: '33.333'
+                                        ClientInfo:
+                                          Individual:
+                                            TitleCode: '1'
+                                            LastName: SMITH
+                                            FirstName: JOHN
+                                            SIN: 99999998
+                                            BirthDate: '19761123'
+                                            Gender: F
+                                          Org:
+                                            OrgName: MY COMPANY INC
+                                            FedBN: R12345678
+                                            ProvBN: '1234567899'
+                                          Language: F
+                                          Email: JON@COMP.CA
+                                        Address:
+                                          AddressLn: 12 OAK AVE
+                                          City: TORONTO
+                                          ProvState: 'true'
+                                          Country: CAN
+                                          PostalZip: M4G1L1
+                              CntgtDthBenDtl:
+                                DthBen:
+                                  - BenType: '1'
+                                    BenRel: '11'
+                                    BenSplit: '33.333'
+                                    ClientInfo:
+                                      Individual:
+                                        TitleCode: '1'
+                                        LastName: SMITH
+                                        FirstName: JOHN
+                                        SIN: 99999998
+                                        BirthDate: '19761123'
+                                        Gender: F
+                                      Org:
+                                        OrgName: MY COMPANY INC
+                                        FedBN: R12345678
+                                        ProvBN: '1234567899'
+                                      Language: F
+                                      Email: JON@COMP.CA
+                                    Address:
+                                      AddressLn: 12 OAK AVE
+                                      City: TORONTO
+                                      ProvState: 'true'
+                                      Country: CAN
+                                      PostalZip: M4G1L1
+                            TFSASucsr:
+                              ClientInfo:
+                                Individual:
+                                  TitleCode: '1'
+                                  LastName: SMITH
+                                  FirstName: JOHN
+                                  SIN: 99999998
+                                  BirthDate: '19761123'
+                                  Gender: F
+                                Org:
+                                  OrgName: MY COMPANY INC
+                                  FedBN: R12345678
+                                  ProvBN: '1234567899'
+                                Language: F
+                                Email: JON@COMP.CA
+                              Address:
+                                AddressLn: 12 OAK AVE
+                                City: TORONTO
+                                ProvState: 'true'
+                                Country: CAN
+                                PostalZip: M4G1L1
+                          TrxnDtl:
+                            Buy:
+                              TrxnTyp: '8'
+                              TrxnTypDtl: '1'
+                              FundID: '304'
+                              Amt:
+                                AmtType: D
+                                AmtValue: '100.55'
+                              GNPur: N
+                              TaxCode: CAN
+                              ClientComm: { }
+                              SettlMethd: '1'
+                              SettlSrc: D
+                              IndSettl:
+                                BkInfo:
+                                  InstutNum: '112'
+                                  BranchNum: '13221'
+                                  BkAcctType: S
+                                  BkAcctNum: '45678999'
+                                  Currency: '01'
+                                  Holder: BOB JONES
+                                CopyBkInfo: { }
+                              CertInd: C
+                              DivOpt: '1'
+                              Payment:
+                                ChequeInfo:
+                                  Payee: B
+                                  Name:
+                                    OrgName: MY COMPANY INC
+                                    TitleCode: '1'
+                                    LastName: SMITH
+                                    FirstName: JOHN
+                                  Address:
+                                    AddressLn: 12 OAK AVE
+                                    City: TORONTO
+                                    ProvState: 'true'
+                                    Country: CAN
+                                    PostalZip: M4G1L1
+                                BkInfo:
+                                  InstutNum: '112'
+                                  BranchNum: '13221'
+                                  BkAcctType: S
+                                  BkAcctNum: '45678999'
+                                  Currency: '01'
+                                  Holder: BOB JONES
+                              CntbWdCode: J
+                              CntbPd: P
+                              StandOrdInd: Y
+                              FeeInfo:
+                                FeeRate: '0125-01-01'
+                                AcctBasedFlg: Y
+                              AcctTypeDtl: D
+                              MgmtSpfc: string
+                            Sell:
+                              TrxnTyp: '8'
+                              TrxnTypDtl: '1'
+                              FundID: '304'
+                              Amt:
+                                AmtType: D
+                                AmtValue: '100.55'
+                              GNRdmtn: N
+                              FedWHoldTaxRt: '2025-05-25'
+                              SettlMethd: '1'
+                              SettlSrc: D
+                              CntbWdCode: J
+                              ChequeInfo:
+                                Payee: B
+                                Name:
+                                  OrgName: MY COMPANY INC
+                                  TitleCode: '1'
+                                  LastName: SMITH
+                                  FirstName: JOHN
+                                Address:
+                                  AddressLn: 12 OAK AVE
+                                  City: TORONTO
+                                  ProvState: 'true'
+                                  Country: CAN
+                                  PostalZip: M4G1L1
+                              PayInstrc:
+                                InstutNum: '112'
+                                BranchNum: '13221'
+                                BkAcctType: S
+                                BkAcctNum: '45678999'
+                                Currency: '01'
+                                Holder: BOB JONES
+                              MgmtSpfc: string
+                            Switch:
+                              TrxnTyp: '8'
+                              TrxnTypDtl: '1'
+                              FundID: '304'
+                              FrmFundID: '123'
+                              Amt:
+                                AmtType: D
+                                AmtValue: '100.55'
+                              GNRdmtn: N
+                              TaxCode: CAN
+                              ClientComm: { }
+                              CertInd: C
+                              DivOpt: '1'
+                              Payment:
+                                ChequeInfo:
+                                  Payee: B
+                                  Name:
+                                    OrgName: MY COMPANY INC
+                                    TitleCode: '1'
+                                    LastName: SMITH
+                                    FirstName: JOHN
+                                  Address:
+                                    AddressLn: 12 OAK AVE
+                                    City: TORONTO
+                                    ProvState: 'true'
+                                    Country: CAN
+                                    PostalZip: M4G1L1
+                                BkInfo:
+                                  InstutNum: '112'
+                                  BranchNum: '13221'
+                                  BkAcctType: S
+                                  BkAcctNum: '45678999'
+                                  Currency: '01'
+                                  Holder: BOB JONES
+                              FeeInfo:
+                                FeeRate: '0125-01-01'
+                                AcctBasedFlg: Y
+                              MgmtSpfc: string
+                            Trnsfr:
+                              TrxnTyp: '8'
+                              TrxnTypDtl: '1'
+                              FundID: '304'
+                              FrmAcct:
+                                FundAcctID: '123212345678'
+                                AcctDesig: '2'
+                                DlrCode: '2804'
+                                DlrAcctID: '123212345678'
+                                AcctType: '17'
+                                IntCode: TEAA
+                                IntAcctID: '123212345678'
+                              OwnerSIN: '999999998'
+                              OwnerBirthDate: '19561112'
+                              Amt:
+                                AmtType: D
+                                AmtValue: '100.55'
+                              GNRdmtn: N
+                              TaxCode: CAN
+                              TaxEvnt: D
+                              DivOpt: '1'
+                              Payment:
+                                ChequeInfo:
+                                  Payee: B
+                                  Name:
+                                    OrgName: MY COMPANY INC
+                                    TitleCode: '1'
+                                    LastName: SMITH
+                                    FirstName: JOHN
+                                  Address:
+                                    AddressLn: 12 OAK AVE
+                                    City: TORONTO
+                                    ProvState: 'true'
+                                    Country: CAN
+                                    PostalZip: M4G1L1
+                                BkInfo:
+                                  InstutNum: '112'
+                                  BranchNum: '13221'
+                                  BkAcctType: S
+                                  BkAcctNum: '45678999'
+                                  Currency: '01'
+                                  Holder: BOB JONES
+                              CntbPd: P
+                              RIFPymt:
+                                StartDate: '20241112'
+                                Frequency: '1'
+                                SpousalBirthDate: '19561112'
+                                AnnualIncrease: '9.99'
+                                MinAmtFlg: Y
+                                Amt:
+                                  AmtType: D
+                                  AmtValue: '100.55'
+                                GNRdmtn: N
+                                SysPlanFund:
+                                  - FundID: '304'
+                                    SysPlanSplit: '33.33'
+                                Payment:
+                                  ChequeInfo:
+                                    Payee: B
+                                    Name:
+                                      OrgName: MY COMPANY INC
+                                      TitleCode: '1'
+                                      LastName: SMITH
+                                      FirstName: JOHN
+                                    Address:
+                                      AddressLn: 12 OAK AVE
+                                      City: TORONTO
+                                      ProvState: 'true'
+                                      Country: CAN
+                                      PostalZip: M4G1L1
+                                  BkInfo:
+                                    InstutNum: '112'
+                                    BranchNum: '13221'
+                                    BkAcctType: S
+                                    BkAcctNum: '45678999'
+                                    Currency: '01'
+                                    Holder: BOB JONES
+                              MgmtSpfc: string
+                            ICT:
+                              TrxnTyp: '8'
+                              TrxnTypDtl: '1'
+                              SettlMethd: '1'
+                              SettlSrc: D
+                              ToMgmtCode: { }
+                              FrmMgmtCode: { }
+                              FrmFundAcctID: '1234567'
+                              FrmAcctDesig: { }
+                              TaxCode: CAN
+                              FrmAcctDtl:
+                                FrmInvstDtl:
+                                  - FundID: '304'
+                                    GNRdmtn: N
+                                    Amt:
+                                      AmtType: D
+                                      AmtValue: '100.55'
+                                MgmtSpfc: string
+                              ToAcctDtl:
+                                FundAcctID: '123212345678'
+                                CntbWdCode: J
+                                CntbPd: P
+                                ToInvstDtl:
+                                  - FundID: '304'
+                                    GNRdmtn: { }
+                                    CertInd: C
+                                    Amt:
+                                      AmtType: D
+                                      AmtValue: '100.55'
+                                    DivOpt: '1'
+                                    Payment:
+                                      ChequeInfo:
+                                        Payee: B
+                                        Name:
+                                          OrgName: MY COMPANY INC
+                                          TitleCode: '1'
+                                          LastName: SMITH
+                                          FirstName: JOHN
+                                        Address:
+                                          AddressLn: 12 OAK AVE
+                                          City: TORONTO
+                                          ProvState: 'true'
+                                          Country: CAN
+                                          PostalZip: M4G1L1
+                                      BkInfo:
+                                        InstutNum: '112'
+                                        BranchNum: '13221'
+                                        BkAcctType: S
+                                        BkAcctNum: '45678999'
+                                        Currency: '01'
+                                        Holder: BOB JONES
+                                    FeeInfo:
+                                      FeeRate: '0125-01-01'
+                                      AcctBasedFlg: Y
+                                MgmtSpfc: string
+                            AOT:
+                              OrigDate: '20240112'
+                              OrigOrdID: '123456'
+                            CDICData:
+                              LEI: 5493000C5MW8VRYUDS17
+                              UCIData:
+                                UCI: '34212221'
+                                SIAIndividualFlg: Y
+                                InterestInDeposit: '60.125'
+                        Reversal:
+                          OrigDate: '20240112'
+                          OrigOrdID: '123456'
+                          FundAcctID: '123212345678'
+                          FundID: '304'
+                          TrxnTyp: '8'
+                          TrxnTypDtl: '1'
+                          GrossAmt: '99.99'
+                          NetAmt: '99.99'
+                          SrcID: ABIA83850331112
+                          CntbWdCode: J
+                          FrmFundID: '123'
+                          FrmFundAcctID: '1234567'
+                      OrdRspn:
+                        ActnCode: NEW
+                        SrcID: ABIA83850331112
+                        OrdID: '1234567'
+                        TrxnRevn: TrxnRevn
+                        DlrCode: '2804'
+                        IntCode: TEAA
+                        FundAcctID: '123212345678'
+                        TradeDate: '20221017'
+                        SettlDate: '20221017'
+                        RspnSrc: N
+                        RtnCode: '99'
+                        Reject:
+                          ErrorCode: '999'
+                        Warning:
+                          ErrorCode: '999'
+                        NotSupprtd:
+                          Field:
+                            - { }
+                        DocReqdFlg: Y
+                Version: '35'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/OrdSet'
+              example: <OrdSet> <xmlns_x003A_xsi>http://www.w3.org/2001/XMLSchema-instance</xmlns_x003A_xsi> <xsi_x003A_schemaLocation>tfs tfs.xsd</xsi_x003A_schemaLocation> <xmlns>tfs</xmlns> <version>35</version> <Msg> <MsgCreate> <Date>20221017</Date> <Time>180328</Time> <Src> <SrcType>D</SrcType> <DlrCode>2804</DlrCode> <IntCode>TEAA</IntCode> </Src> <Target> <TargetType>F</TargetType> <MgmtCode>YTA</MgmtCode> </Target> </MsgCreate> <Ntwrk> <NtwrkID>FSRV</NtwrkID> <Date>20221017</Date> <Time>180328</Time> <OrdID>1234567</OrdID> <TradeDate>20221017</TradeDate> <SettlDate>20221017</SettlDate> </Ntwrk> <MsgType> <OrdReq> <ActnCode>NEW</ActnCode> <SrcID>ABIA83850331112</SrcID> <TrxnRevn>TrxnRevn</TrxnRevn> <DlrCode>2804</DlrCode> <IntCode>TEAA</IntCode> <ClerkID>SAM304</ClerkID> <RepCode>JJ11</RepCode> <SupConfirm>Y</SupConfirm> <DilSrc>D</DilSrc> <DilLink> <DilLinkID>A123456</DilLinkID> <CorrectnNum>12</CorrectnNum> <TotCorrectn>99</TotCorrectn> </DilLink> <OrdDtl> <AcctLookup> <MgmtCode>YTA</MgmtCode> <FundAcctID>123212345678</FundAcctID> <AcctDesig>2</AcctDesig> </AcctLookup> <AcctSetup> <Dlr> <DlrCode>2804</DlrCode> <RepCode>JJ11</RepCode> <DlrAcctID>123212345678</DlrAcctID> </Dlr> <Int> <IntCode>TEAA</IntCode> <IntAcctID>123212345678</IntAcctID> </Int> <AcctInfo> <AcctDesig>2</AcctDesig> <AcctType>17</AcctType> <AcctTypeDtl>D</AcctTypeDtl> <RecipCode>1</RecipCode> <TaxCode>CAN</TaxCode> <Group> <GroupFlg>D</GroupFlg> <GroupID>56784399</GroupID> </Group> <TaxCalcFlg> <DOBType>B</DOBType> <BirthDate>19761123</BirthDate> </TaxCalcFlg> <SpousalFlg>Y</SpousalFlg> <LckdInCode>L</LckdInCode> <MgmtSpfc>string</MgmtSpfc> <eDeliverFlg>Y</eDeliverFlg> </AcctInfo> <Owner> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> <RDSPRel>02</RDSPRel> <IDVerify> <IDType>A</IDType> <OtherDscrp>PHOTO CARD</OtherDscrp> <IDNum>BT3026789</IDNum> <PlaceIssue> <Country>CAN</Country> <ProvState>true</ProvState> </PlaceIssue> </IDVerify> <ForeignPerson> <IndividualTIN> <Country>CAN</Country> <EffectDate>20241212</EffectDate> <PersonStatus>R</PersonStatus> <TIN>99999998</TIN> <NoTINReasonCode>1</NoTINReasonCode> </IndividualTIN> </ForeignPerson> <ForeignEntity> <OrganizationTIN> <Country>CAN</Country> <EffectDate>20241212</EffectDate> <TINType>PASSPORT</TINType> <TIN>99999998</TIN> <NoTINReasonCode>1</NoTINReasonCode> <FATCAClassification>S</FATCAClassification> <CRSClassification>CRS101</CRSClassification> </OrganizationTIN> <GIIN>0FN69V.00219.SF.391</GIIN> <ControllingPerson> <ControllingPersonType>CRS801</ControllingPersonType> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <BirthDate>19761123</BirthDate> <SIN>99999998</SIN> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> <ForeignPerson> <IndividualTIN> <Country>CAN</Country> <EffectDate>20241212</EffectDate> <PersonStatus>R</PersonStatus> <TIN>99999998</TIN> <NoTINReasonCode>1</NoTINReasonCode> </IndividualTIN> </ForeignPerson> </ControllingPerson> </ForeignEntity> </Owner> <Jnt> <JntSurType>J</JntSurType> <JntSigType>A</JntSigType> <JntOwner> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> <RDSPRel>02</RDSPRel> <IDVerify> <IDType>A</IDType> <OtherDscrp>PHOTO CARD</OtherDscrp> <IDNum>BT3026789</IDNum> <PlaceIssue> <Country>CAN</Country> <ProvState>true</ProvState> </PlaceIssue> </IDVerify> <ForeignPerson> <IndividualTIN> <Country>CAN</Country> <EffectDate>20241212</EffectDate> <PersonStatus>R</PersonStatus> <TIN>99999998</TIN> <NoTINReasonCode>1</NoTINReasonCode> </IndividualTIN> </ForeignPerson> </JntOwner> </Jnt> <Spousal> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </Spousal> <ITF> <ITFBen> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <ForeignPerson> <IndividualTIN> <Country>CAN</Country> <EffectDate>20241212</EffectDate> <PersonStatus>R</PersonStatus> <TIN>99999998</TIN> <NoTINReasonCode>1</NoTINReasonCode> </IndividualTIN> </ForeignPerson> <ForeignEntity> <OrganizationTIN> <Country>CAN</Country> <EffectDate>20241212</EffectDate> <TINType>PASSPORT</TINType> <TIN>99999998</TIN> <NoTINReasonCode>1</NoTINReasonCode> <FATCAClassification>S</FATCAClassification> <CRSClassification>CRS101</CRSClassification> </OrganizationTIN> <GIIN>0FN69V.00219.SF.391</GIIN> <ControllingPerson> <ControllingPersonType>CRS801</ControllingPersonType> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <BirthDate>19761123</BirthDate> <SIN>99999998</SIN> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> <ForeignPerson> <IndividualTIN> <Country>CAN</Country> <EffectDate>20241212</EffectDate> <PersonStatus>R</PersonStatus> <TIN>99999998</TIN> <NoTINReasonCode>1</NoTINReasonCode> </IndividualTIN> </ForeignPerson> </ControllingPerson> </ForeignEntity> </ITFBen> </ITF> <RESPBenDtl> <RESPBen> <BenRel>11</BenRel> <BenSplit>33.333</BenSplit> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <CopyAddrss>Y</CopyAddrss> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> <FATCAClassification>S</FATCAClassification> <CRSClassification>CRS101</CRSClassification> </RESPBen> </RESPBenDtl> <DthBenDtl> <Estate>Y</Estate> <DthBen> <BenType>1</BenType> <BenRel>11</BenRel> <BenSplit>33.333</BenSplit> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </DthBen> </DthBenDtl> <RDSPBenDtl> <RDSPBen> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </RDSPBen> </RDSPBenDtl> <TFSASucsr> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </TFSASucsr> <SegInfo> <CopyOwner>Y</CopyOwner> <Annuitant> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </Annuitant> <MatureDate>20241212</MatureDate> <JurProv>BC</JurProv> <JntAnnuitant> <AnnuitantConDtl>1</AnnuitantConDtl> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </JntAnnuitant> <SucsrAnnuitant> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </SucsrAnnuitant> <SucsrOwner> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </SucsrOwner> <PrimDthBenDtl> <EstateSplit>33.333</EstateSplit> <PrimDthBen> <BenType>1</BenType> <BenRel>11</BenRel> <BenSplit>33.333</BenSplit> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> <ConPrimDthBen> <BenType>1</BenType> <BenRel>11</BenRel> <BenSplit>33.333</BenSplit> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </ConPrimDthBen> </PrimDthBen> </PrimDthBenDtl> <CntgtDthBenDtl> <DthBen> <BenType>1</BenType> <BenRel>11</BenRel> <BenSplit>33.333</BenSplit> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </DthBen> </CntgtDthBenDtl> <LIB> <LIBOpt>S</LIBOpt> <LIBFund>123</LIBFund> </LIB> <DthBnftGua> <DthBnftResetOpt>Y</DthBnftResetOpt> <DthBnftResetFund>123</DthBnftResetFund> </DthBnftGua> <MatGua> <MatGuaResetOpt>Y</MatGuaResetOpt> <MatGuaResetFund>123</MatGuaResetFund> </MatGua> </SegInfo> <PrmCareGvrDtl> <PrmCareGvr> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> </PrmCareGvr> </PrmCareGvrDtl> </AcctSetup> <AcctTrnsfr> <MgmtCode>YTA</MgmtCode> <FundAcctID>123212345678</FundAcctID> <AcctDesig>2</AcctDesig> <DlrAcctID>123212345678</DlrAcctID> <AcctType>17</AcctType> <IntAcctID>123212345678</IntAcctID> <DthBenDtl> <Estate>Y</Estate> <DthBen> <BenType>1</BenType> <BenRel>11</BenRel> <BenSplit>33.333</BenSplit> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </DthBen> </DthBenDtl> <SegTrnsfr> <PrimDthBenDtl> <EstateSplit>33.333</EstateSplit> <PrimDthBen> <BenType>1</BenType> <BenRel>11</BenRel> <BenSplit>33.333</BenSplit> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> <ConPrimDthBen> <BenType>1</BenType> <BenRel>11</BenRel> <BenSplit>33.333</BenSplit> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </ConPrimDthBen> </PrimDthBen> </PrimDthBenDtl> <CntgtDthBenDtl> <DthBen> <BenType>1</BenType> <BenRel>11</BenRel> <BenSplit>33.333</BenSplit> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </DthBen> </CntgtDthBenDtl> </SegTrnsfr> <TFSASucsr> <ClientInfo> <Individual> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> <SIN>99999998</SIN> <BirthDate>19761123</BirthDate> <Gender>F</Gender> </Individual> <Org> <OrgName>MY COMPANY INC</OrgName> <FedBN>R12345678</FedBN> <ProvBN>1234567899</ProvBN> </Org> <Language>F</Language> <Email>JON@COMP.CA</Email> </ClientInfo> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </TFSASucsr> </AcctTrnsfr> <TrxnDtl> <Buy> <TrxnTyp>8</TrxnTyp> <TrxnTypDtl>1</TrxnTypDtl> <FundID>304</FundID> <Amt> <AmtType>D</AmtType> <AmtValue>100.55</AmtValue> </Amt> <GNPur>N</GNPur> <TaxCode>CAN</TaxCode> <ClientComm /> <SettlMethd>1</SettlMethd> <SettlSrc>D</SettlSrc> <IndSettl> <BkInfo> <InstutNum>112</InstutNum> <BranchNum>13221</BranchNum> <BkAcctType>S</BkAcctType> <BkAcctNum>45678999</BkAcctNum> <Currency>01</Currency> <Holder>BOB JONES</Holder> </BkInfo> <CopyBkInfo /> </IndSettl> <CertInd>C</CertInd> <DivOpt>1</DivOpt> <Payment> <ChequeInfo> <Payee>B</Payee> <Name> <OrgName>MY COMPANY INC</OrgName> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> </Name> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </ChequeInfo> <BkInfo> <InstutNum>112</InstutNum> <BranchNum>13221</BranchNum> <BkAcctType>S</BkAcctType> <BkAcctNum>45678999</BkAcctNum> <Currency>01</Currency> <Holder>BOB JONES</Holder> </BkInfo> </Payment> <CntbWdCode>J</CntbWdCode> <CntbPd>P</CntbPd> <StandOrdInd>Y</StandOrdInd> <FeeInfo> <FeeRate>1.125</FeeRate> <AcctBasedFlg>Y</AcctBasedFlg> </FeeInfo> <AcctTypeDtl>D</AcctTypeDtl> <MgmtSpfc>string</MgmtSpfc> </Buy> <Sell> <TrxnTyp>8</TrxnTyp> <TrxnTypDtl>1</TrxnTypDtl> <FundID>304</FundID> <Amt> <AmtType>D</AmtType> <AmtValue>100.55</AmtValue> </Amt> <GNRdmtn>N</GNRdmtn> <FedWHoldTaxRt>5.25</FedWHoldTaxRt> <SettlMethd>1</SettlMethd> <SettlSrc>D</SettlSrc> <CntbWdCode>J</CntbWdCode> <ChequeInfo> <Payee>B</Payee> <Name> <OrgName>MY COMPANY INC</OrgName> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> </Name> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </ChequeInfo> <PayInstrc> <InstutNum>112</InstutNum> <BranchNum>13221</BranchNum> <BkAcctType>S</BkAcctType> <BkAcctNum>45678999</BkAcctNum> <Currency>01</Currency> <Holder>BOB JONES</Holder> </PayInstrc> <MgmtSpfc>string</MgmtSpfc> </Sell> <Switch> <TrxnTyp>8</TrxnTyp> <TrxnTypDtl>1</TrxnTypDtl> <FundID>304</FundID> <FrmFundID>123</FrmFundID> <Amt> <AmtType>D</AmtType> <AmtValue>100.55</AmtValue> </Amt> <GNRdmtn>N</GNRdmtn> <TaxCode>CAN</TaxCode> <ClientComm /> <CertInd>C</CertInd> <DivOpt>1</DivOpt> <Payment> <ChequeInfo> <Payee>B</Payee> <Name> <OrgName>MY COMPANY INC</OrgName> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> </Name> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </ChequeInfo> <BkInfo> <InstutNum>112</InstutNum> <BranchNum>13221</BranchNum> <BkAcctType>S</BkAcctType> <BkAcctNum>45678999</BkAcctNum> <Currency>01</Currency> <Holder>BOB JONES</Holder> </BkInfo> </Payment> <FeeInfo> <FeeRate>1.125</FeeRate> <AcctBasedFlg>Y</AcctBasedFlg> </FeeInfo> <MgmtSpfc>string</MgmtSpfc> </Switch> <Trnsfr> <TrxnTyp>8</TrxnTyp> <TrxnTypDtl>1</TrxnTypDtl> <FundID>304</FundID> <FrmAcct> <FundAcctID>123212345678</FundAcctID> <AcctDesig>2</AcctDesig> <DlrCode>2804</DlrCode> <DlrAcctID>123212345678</DlrAcctID> <AcctType>17</AcctType> <IntCode>TEAA</IntCode> <IntAcctID>123212345678</IntAcctID> </FrmAcct> <OwnerSIN>999999998</OwnerSIN> <OwnerBirthDate>19561112</OwnerBirthDate> <Amt> <AmtType>D</AmtType> <AmtValue>100.55</AmtValue> </Amt> <GNRdmtn>N</GNRdmtn> <TaxCode>CAN</TaxCode> <TaxEvnt>D</TaxEvnt> <DivOpt>1</DivOpt> <Payment> <ChequeInfo> <Payee>B</Payee> <Name> <OrgName>MY COMPANY INC</OrgName> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> </Name> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </ChequeInfo> <BkInfo> <InstutNum>112</InstutNum> <BranchNum>13221</BranchNum> <BkAcctType>S</BkAcctType> <BkAcctNum>45678999</BkAcctNum> <Currency>01</Currency> <Holder>BOB JONES</Holder> </BkInfo> </Payment> <CntbPd>P</CntbPd> <RIFPymt> <StartDate>20241112</StartDate> <Frequency>1</Frequency> <SpousalBirthDate>19561112</SpousalBirthDate> <AnnualIncrease>9.99</AnnualIncrease> <MinAmtFlg>Y</MinAmtFlg> <Amt> <AmtType>D</AmtType> <AmtValue>100.55</AmtValue> </Amt> <GNRdmtn>N</GNRdmtn> <SysPlanFund> <FundID>304</FundID> <SysPlanSplit>33.33</SysPlanSplit> </SysPlanFund> <Payment> <ChequeInfo> <Payee>B</Payee> <Name> <OrgName>MY COMPANY INC</OrgName> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> </Name> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </ChequeInfo> <BkInfo> <InstutNum>112</InstutNum> <BranchNum>13221</BranchNum> <BkAcctType>S</BkAcctType> <BkAcctNum>45678999</BkAcctNum> <Currency>01</Currency> <Holder>BOB JONES</Holder> </BkInfo> </Payment> </RIFPymt> <MgmtSpfc>string</MgmtSpfc> </Trnsfr> <ICT> <TrxnTyp>8</TrxnTyp> <TrxnTypDtl>1</TrxnTypDtl> <SettlMethd>1</SettlMethd> <SettlSrc>D</SettlSrc> <ToMgmtCode /> <FrmMgmtCode /> <FrmFundAcctID>1234567</FrmFundAcctID> <FrmAcctDesig /> <TaxCode>CAN</TaxCode> <FrmAcctDtl> <FrmInvstDtl> <FundID>304</FundID> <GNRdmtn>N</GNRdmtn> <Amt> <AmtType>D</AmtType> <AmtValue>100.55</AmtValue> </Amt> </FrmInvstDtl> <MgmtSpfc>string</MgmtSpfc> </FrmAcctDtl> <ToAcctDtl> <FundAcctID>123212345678</FundAcctID> <CntbWdCode>J</CntbWdCode> <CntbPd>P</CntbPd> <ToInvstDtl> <FundID>304</FundID> <GNRdmtn /> <CertInd>C</CertInd> <Amt> <AmtType>D</AmtType> <AmtValue>100.55</AmtValue> </Amt> <DivOpt>1</DivOpt> <Payment> <ChequeInfo> <Payee>B</Payee> <Name> <OrgName>MY COMPANY INC</OrgName> <TitleCode>1</TitleCode> <LastName>SMITH</LastName> <FirstName>JOHN</FirstName> </Name> <Address> <AddressLn>12 OAK AVE</AddressLn> <City>TORONTO</City> <ProvState>true</ProvState> <Country>CAN</Country> <PostalZip>M4G1L1</PostalZip> </Address> </ChequeInfo> <BkInfo> <InstutNum>112</InstutNum> <BranchNum>13221</BranchNum> <BkAcctType>S</BkAcctType> <BkAcctNum>45678999</BkAcctNum> <Currency>01</Currency> <Holder>BOB JONES</Holder> </BkInfo> </Payment> <FeeInfo> <FeeRate>1.125</FeeRate> <AcctBasedFlg>Y</AcctBasedFlg> </FeeInfo> </ToInvstDtl> <MgmtSpfc>string</MgmtSpfc> </ToAcctDtl> </ICT> <AOT> <OrigDate>20240112</OrigDate> <OrigOrdID>123456</OrigOrdID> </AOT> <CDICData> <LEI>5493000C5MW8VRYUDS17</LEI> <UCIData> <UCI>34212221</UCI> <SIAIndividualFlg>Y</SIAIndividualFlg> <InterestInDeposit>60.125</InterestInDeposit> </UCIData> </CDICData> </TrxnDtl> </OrdDtl> <Reversal> <OrigDate>20240112</OrigDate> <OrigOrdID>123456</OrigOrdID> <FundAcctID>123212345678</FundAcctID> <FundID>304</FundID> <TrxnTyp>8</TrxnTyp> <TrxnTypDtl>1</TrxnTypDtl> <GrossAmt>99.99</GrossAmt> <NetAmt>99.99</NetAmt> <SrcID>ABIA83850331112</SrcID> <CntbWdCode>J</CntbWdCode> <FrmFundID>123</FrmFundID> <FrmFundAcctID>1234567</FrmFundAcctID> </Reversal> </OrdReq> <OrdRspn> <ActnCode>NEW</ActnCode> <SrcID>ABIA83850331112</SrcID> <OrdID>1234567</OrdID> <TrxnRevn>TrxnRevn</TrxnRevn> <DlrCode>2804</DlrCode> <IntCode>TEAA</IntCode> <FundAcctID>123212345678</FundAcctID> <TradeDate>20221017</TradeDate> <SettlDate>20221017</SettlDate> <RspnSrc>N</RspnSrc> <RtnCode>99</RtnCode> <Reject> <ErrorCode>999</ErrorCode> </Reject> <Warning> <ErrorCode>999</ErrorCode> </Warning> <NotSupprtd> <Field /> </NotSupprtd> <DocReqdFlg>Y</DocReqdFlg> </OrdRspn> </MsgType> </Msg> </OrdSet>
+components:
+  schemas:
+    OrdSet:
+      type: object
+      properties:
+        xmlns:xsi:
+          type: string
+          xml:
+            attribute: true
+          example: http://www.w3.org/2001/XMLSchema-instance
+        xsi:schemaLocation:
+          type: string
+          xml:
+            attribute: true
+          example: tfs tfs.xsd
+        xmlns:
+          type: string
+          xml:
+            attribute: true
+          example: tfs
+        version:
+          type: string
+          xml:
+            attribute: true
+          example: '33'
+        Msg:
+          type: array
+          items:
+            $ref: '#/components/schemas/Msg'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_orderset.htm
+    OrdSetJson:
+      type: object
+      properties:
+        Msg:
+          type: array
+          items:
+            $ref: '#/components/schemas/Msg'
+        Version:
+          type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_orderset.htm
+    Msg:
+      required:
+        - MsgCreate
+        - Ntwrk
+        - MsgType
+      type: object
+      properties:
+        MsgCreate:
+          $ref: '#/components/schemas/MsgCreate'
+        Ntwrk:
+          $ref: '#/components/schemas/Ntwrk'
+        MsgType:
+          $ref: '#/components/schemas/MsgType'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_msg.htm
+    MsgCreate:
+      required:
+        - Date
+        - Time
+        - Src
+        - Target
+      type: object
+      properties:
+        Date:
+          $ref: '#/components/schemas/Date'
+        Time:
+          $ref: '#/components/schemas/Time'
+        Src:
+          $ref: '#/components/schemas/Src'
+        Target:
+          $ref: '#/components/schemas/Target'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_msgcreate.htm
+    MsgType:
+      type: object
+      properties:
+        OrdReq:
+          $ref: '#/components/schemas/OrdReq'
+        OrdRspn:
+          $ref: '#/components/schemas/OrdRspn'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_msgtype.htm
+    Ntwrk:
+      required:
+        - NtwrkID
+        - Date
+        - Time
+        - TradeDate
+        - SettlDate
+      type: object
+      properties:
+        NtwrkID:
+          $ref: '#/components/schemas/NtwrkID'
+        Date:
+          $ref: '#/components/schemas/Date'
+        Time:
+          $ref: '#/components/schemas/Time'
+        OrdID:
+          $ref: '#/components/schemas/OrdID'
+        TradeDate:
+          $ref: '#/components/schemas/TradeDate'
+        SettlDate:
+          $ref: '#/components/schemas/SettlDate'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_ntwrk.htm
+    Src:
+      required:
+        - SrcType
+      type: object
+      properties:
+        SrcType:
+          $ref: '#/components/schemas/SrcType'
+        DlrCode:
+          $ref: '#/components/schemas/DlrCode'
+        IntCode:
+          $ref: '#/components/schemas/IntCode'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_src.htm
+    Date:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_date.htm
+      example: '20221017'
+    Time:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_time.htm
+      example: '180328'
+    OrdID:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_ordid.htm
+      example: '1234567'
+    TradeDate:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_tradedate.htm
+      example: '20221017'
+    SettlDate:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_settldate.htm
+      example: '20221017'
+    SrcType:
+      type: string
+      description: Note the SrcType will always = D if Src contains DlrCode or I if Src contains IntCode.
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_srctype.htm
+      example: D
+    DlrCode:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_dlrcode.htm
+      example: '2804'
+    MgmtCode:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_mgmtcode.htm
+      example: YTA
+    AcctDesig:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_acctdesig.htm
+      example: '2'
+    IntCode:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_intcode.htm
+      example: TEAA
+    Target:
+      required:
+        - TargetType
+        - MgmtCode
+      type: object
+      properties:
+        TargetType:
+          $ref: '#/components/schemas/TargetType'
+        MgmtCode:
+          $ref: '#/components/schemas/MgmtCode'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_target.htm
+    TargetType:
+      type: string
+      description: Note the TargetType will always = F.
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_targettype.htm
+      example: F
+    OrdReq:
+      required:
+        - ActnCode
+        - SrcID
+        - RepCode
+      type: object
+      properties:
+        ActnCode:
+          $ref: '#/components/schemas/ActnCode'
+        SrcID:
+          $ref: '#/components/schemas/SrcID'
+        TrxnRevn:
+          $ref: '#/components/schemas/TrxnRevn'
+        DlrCode:
+          $ref: '#/components/schemas/DlrCode'
+        IntCode:
+          $ref: '#/components/schemas/IntCode'
+        ClerkID:
+          $ref: '#/components/schemas/ClerkID'
+        RepCode:
+          $ref: '#/components/schemas/RepCode'
+        SupConfirm:
+          $ref: '#/components/schemas/SupConfirm'
+        OrdDtl:
+          $ref: '#/components/schemas/OrdDtl'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_ordreq.htm
+    OrdRspn:
+      required:
+        - ActnCode
+        - SrcID
+        - RspnSrc
+        - RtnCode
+      type: object
+      properties:
+        ActnCode:
+          $ref: '#/components/schemas/ActnCode'
+        SrcID:
+          $ref: '#/components/schemas/SrcID'
+        OrdID:
+          $ref: '#/components/schemas/OrdID'
+        TrxnRevn:
+          $ref: '#/components/schemas/TrxnRevn'
+        DlrCode:
+          $ref: '#/components/schemas/DlrCode'
+        IntCode:
+          $ref: '#/components/schemas/IntCode'
+        FundAcctID:
+          $ref: '#/components/schemas/FundAcctID'
+        TradeDate:
+          $ref: '#/components/schemas/TradeDate'
+        SettlDate:
+          $ref: '#/components/schemas/SettlDate'
+        RspnSrc:
+          $ref: '#/components/schemas/RspnSrc'
+        RtnCode:
+          $ref: '#/components/schemas/RtnCode'
+        Reject:
+          $ref: '#/components/schemas/Reject'
+        Warning:
+          $ref: '#/components/schemas/Warning'
+        NotSupprtd:
+          $ref: '#/components/schemas/NotSupprtd'
+        DocReqdFlg:
+          $ref: '#/components/schemas/DocReqdFlg'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_ordrspn.htm
+    Reject:
+      type: object
+      properties:
+        ErrorCode:
+          $ref: '#/components/schemas/ErrorCode'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_reject.htm
+    Warning:
+      type: object
+      properties:
+        ErrorCode:
+          $ref: '#/components/schemas/ErrorCode'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_warning.htm
+    NotSupprtd:
+      type: object
+      properties:
+        Field:
+          $ref: '#/components/schemas/Field'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_notsupprtd.htm
+    DocReqdFlg:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_docreqdflg.htm
+      example: Y
+    ErrorCode:
+      type: array
+      items:
+        type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_errorcode.htm
+      example: '999'
+    Field:
+      type: array
+      items:
+        type: object
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_field.htm
+    OrdDtl:
+      required:
+        - AcctLookup
+        - TrxnDtl
+      type: object
+      properties:
+        AcctLookup:
+          $ref: '#/components/schemas/AcctLookup'
+        TrxnDtl:
+          $ref: '#/components/schemas/TrxnDtl'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_orddtl.htm
+    AcctLookup:
+      required:
+        - MgmtCode
+        - FundAcctID
+        - AcctDesig
+      type: object
+      properties:
+        MgmtCode:
+          $ref: '#/components/schemas/MgmtCode'
+        FundAcctID:
+          $ref: '#/components/schemas/FundAcctID'
+        AcctDesig:
+          $ref: '#/components/schemas/AcctDesig'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_acctlookup.htm
+    TrxnDtl:
+      required:
+        - Switch
+      type: object
+      properties:
+        Switch:
+          $ref: '#/components/schemas/Switch'
+        CDICData:
+          $ref: '#/components/schemas/CDICData'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_trxndet.htm
+    CDICData:
+      required:
+        - UCIData
+      type: object
+      properties:
+        LEI:
+          $ref: '#/components/schemas/LEI'
+        UCIData:
+          $ref: '#/components/schemas/UCIData'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_cdicdata.htm
+    UCIData:
+      required:
+        - UCI
+      type: object
+      properties:
+        UCI:
+          $ref: '#/components/schemas/UCI'
+        SIAIndividualFlg:
+          $ref: '#/components/schemas/SIAIndividualFlg'
+        InterestInDeposit:
+          $ref: '#/components/schemas/InterestInDeposit'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_UCIdata.htm
+    LEI:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_legalentity.htm
+      example: 5493000C5MW8VRYUDS17
+    UCI:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_UCI.htm
+      example: '34212221'
+    SIAIndividualFlg:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_SIAindividualflg.htm
+      example: Y
+    InterestInDeposit:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_interestindeposit.htm
+      example: '60.125'
+    Switch:
+      required:
+        - TrxnTyp
+        - TrxnTypDtl
+        - FundID
+        - FrmFundID
+        - Amt
+        - GNRdmtn
+        - TaxCode
+      type: object
+      properties:
+        TrxnTyp:
+          $ref: '#/components/schemas/TrxnTyp'
+        TrxnTypDtl:
+          $ref: '#/components/schemas/TrxnTypDtl'
+        FundID:
+          $ref: '#/components/schemas/FundID'
+        FrmFundID:
+          $ref: '#/components/schemas/FrmFundID'
+        Amt:
+          $ref: '#/components/schemas/Amt'
+        GNRdmtn:
+          $ref: '#/components/schemas/GNRdmtn'
+        TaxCode:
+          $ref: '#/components/schemas/TaxCode'
+        ClientComm:
+          $ref: '#/components/schemas/ClientComm'
+        CertInd:
+          $ref: '#/components/schemas/CertInd'
+        DivOpt:
+          $ref: '#/components/schemas/DivOpt'
+        Payment:
+          $ref: '#/components/schemas/Payment'
+        FeeInfo:
+          $ref: '#/components/schemas/FeeInfo'
+        MgmtSpfc:
+          $ref: '#/components/schemas/MgmtSpfc'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_switch.htm
+    Amt:
+      required:
+        - AmtType
+      type: object
+      properties:
+        AmtType:
+          $ref: '#/components/schemas/AmtType'
+        AmtValue:
+          $ref: '#/components/schemas/AmtValue'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_amt.htm
+    AmtType:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_amttype.htm
+      example: D
+    AmtValue:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_amtvalue.htm
+      example: '100.55'
+    FeeInfo:
+      required:
+        - FeeRate
+      type: object
+      properties:
+        FeeRate:
+          $ref: '#/components/schemas/FeeRate'
+        AcctBasedFlg:
+          $ref: '#/components/schemas/AcctBasedFlg'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_feeinfo.htm
+    FeeRate:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_feerate.htm
+      example: '1.125'
+    AcctBasedFlg:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_acctbasedflg.htm
+      example: Y
+    Payment:
+      type: object
+      properties:
+        ChequeInfo:
+          $ref: '#/components/schemas/ChequeInfo'
+        BkInfo:
+          $ref: '#/components/schemas/BkInfo'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_payment.htm
+    BkInfo:
+      required:
+        - InstutNum
+        - BranchNum
+        - BkAcctNum
+        - Holder
+      type: object
+      properties:
+        InstutNum:
+          $ref: '#/components/schemas/InstutNum'
+        BranchNum:
+          $ref: '#/components/schemas/BranchNum'
+        BkAcctType:
+          $ref: '#/components/schemas/BkAcctType'
+        BkAcctNum:
+          $ref: '#/components/schemas/BkAcctNum'
+        Currency:
+          $ref: '#/components/schemas/Currency'
+        Holder:
+          $ref: '#/components/schemas/Holder'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_bkinfo.htm
+    InstutNum:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_instutnum.htm
+      example: '112'
+    BranchNum:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_branchnum.htm
+      example: '13221'
+    BkAcctType:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_bkaccttype.htm
+      example: S
+    BkAcctNum:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_bkacctnum.htm
+      example: '45678999'
+    Currency:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_currency.htm
+      example: '01'
+    Holder:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_holder.htm
+      example: BOB JONES
+    ChequeInfo:
+      required:
+        - Payee
+        - Address
+      type: object
+      properties:
+        Payee:
+          $ref: '#/components/schemas/Payee'
+        Name:
+          $ref: '#/components/schemas/Name'
+        Address:
+          $ref: '#/components/schemas/Address'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_chequeinfo.htm
+    Payee:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_payee.htm
+      example: B
+    Name:
+      type: object
+      properties:
+        OrgName:
+          $ref: '#/components/schemas/OrgName'
+        TitleCode:
+          $ref: '#/components/schemas/TitleCode'
+        LastName:
+          $ref: '#/components/schemas/LastName'
+        FirstName:
+          $ref: '#/components/schemas/FirstName'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_name.htm
+    OrgName:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_orgname.htm
+      example: MY COMPANY INC
+    FirstName:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_firstname.htm
+      example: JOHN
+    TitleCode:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_titlecode.htm
+      example: '1'
+    LastName:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_lastname.htm
+      example: SMITH
+    Address:
+      required:
+        - AddressLn
+        - City
+        - Country
+      type: object
+      properties:
+        AddressLn:
+          $ref: '#/components/schemas/AddressLn'
+        City:
+          $ref: '#/components/schemas/City'
+        ProvState:
+          $ref: '#/components/schemas/ProvState'
+        Country:
+          $ref: '#/components/schemas/Country'
+        PostalZip:
+          $ref: '#/components/schemas/PostalZip'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_address.htm
+    AddressLn:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_addressln.htm
+      example: 12 OAK AVE
+    City:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_city.htm
+      example: TORONTO
+    ProvState:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_provstate.htm
+      example: 'true'
+    Country:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_country.htm
+      example: CAN
+    PostalZip:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_postalzip.htm
+      example: M4G1L1
+    ClerkID:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_clerkid.htm
+      example: SAM304
+    RepCode:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_repcode.htm
+      example: JJ11
+    FundID:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_fundid.htm
+      example: '304'
+    FrmFundID:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_frmfundid.htm
+      example: '123'
+    MgmtSpfc:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_mgmtspfc.htm
+    SupConfirm:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_supconfirm.htm
+      example: Y
+    CorrlatnID:
+      type: string
+      description: This will contain a Message ID or Trace ID. Used in error handling to help map the error back to the query.
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_corrlatnid.htm
+      example: 414D51205446534C514D32202020202028E4756304458424
+    ActnCode:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_actncode.htm
+      example: NEW
+    SrcID:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_srcid.htm
+      example: ABIA83850331112
+    NtwrkID:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_ntwrkid.htm
+      example: FSRV
+    TrxnRevn:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_trxnrevn.htm
+      example: TrxnRevn
+    FundAcctID:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_fundacctid.htm
+      example: '123212345678'
+    TrxnTyp:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_trxntyp.htm
+      example: '8'
+    TrxnTypDtl:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_trxntypdtl.htm
+      example: '1'
+    GNRdmtn:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_gnrdmtn.htm
+      example: N
+    TaxCode:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_taxcode.htm
+      example: CAN
+    ClientComm:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_clientcomm.htm
+      example: '1.333'
+    CertInd:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_certind.htm
+      example: Y
+    DivOpt:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_divopt.htm
+      example: '1'
+    ErrorSet:
+      type: object
+      properties:
+        xmlns:xsi:
+          type: string
+          xml:
+            attribute: true
+          example: http://www.w3.org/2001/XMLSchema-instance
+        xsi:schemaLocation:
+          type: string
+          xml:
+            attribute: true
+          example: tfs tfs.xsd
+        xmlns:
+          type: string
+          xml:
+            attribute: true
+          example: tfs
+        version:
+          type: string
+          xml:
+            attribute: true
+          example: '33'
+        NtwrkError:
+          type: array
+          items:
+            $ref: '#/components/schemas/NtwrkError'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_errorset.htm
+    ErrorSetJson:
+      type: object
+      properties:
+        NtwrkError:
+          type: array
+          items:
+            $ref: '#/components/schemas/NtwrkError'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_errorset.htm
+    RspnSrc:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards33/data_standards/dx_rspnsrc.htm
+      example: N
+    RtnCode:
+      type: string
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards33/data_standards/dx_rtncode.htm
+      example: '99'
+    NtwrkError:
+      required:
+        - RspnSrc
+        - RtnCode
+        - ErrorCode
+      type: object
+      properties:
+        RspnSrc:
+          $ref: '#/components/schemas/RspnSrc'
+        RtnCode:
+          $ref: '#/components/schemas/RtnCode'
+        ErrorCode:
+          type: string
+          externalDocs:
+            description: Review in Standards Helpfile
+            url: https://estandards.fundserv.com/secure/english/standards33/data_standards/dx_errorcode.htm
+        CorrlatnID:
+          $ref: '#/components/schemas/CorrlatnID'
+        OrdID:
+          $ref: '#/components/schemas/OrdID'
+      externalDocs:
+        description: Review in Standards Helpfile
+        url: https://estandards.fundserv.com/secure/english/standards/data_standards/dx_ntwrkerror.htm
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]
