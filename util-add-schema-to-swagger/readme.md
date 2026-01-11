@@ -161,6 +161,8 @@ python batch-enhance-apis.py ../UAT-20251202 rest-service-schema.json enhanced-a
 
 🔄 Enhancing 8 files...
 ✅ Enhanced: distributor-order-response-inquiry-api-v1.yaml
+🔍 Found case-insensitive match for SupConfirm -> Supconfirm
+📋 Added enum to SupConfirm: ['Y']
 ✅ Enhanced: order-buy-api-v1.yaml
 ✅ Enhanced: order-sell-api-v1.yaml
 ✅ Enhanced: order-switch-api-v1.yaml
@@ -171,6 +173,7 @@ python batch-enhance-apis.py ../UAT-20251202 rest-service-schema.json enhanced-a
 📈 Batch Enhancement Complete:
    ✅ Successful: 7
    ❌ Failed: 0
+   📋 Enhanced 51 schemas with case-insensitive matching
    📂 Output directory: enhanced-apis
 ```
 
@@ -227,6 +230,19 @@ Date:
 
 ## 🔧 Recent Technical Improvements
 
+### **v2.2 - Case-Insensitive Schema Matching**
+**January 2026**: Enhanced schema matching and validation application with improved reliability:
+
+#### **Case-Insensitive Schema Lookup**
+- **Problem**: Schema fields like "SupConfirm" in Swagger vs "Supconfirm" in JSON schema caused missed validations
+- **Solution**: Added `_find_schema_key_case_insensitive()` method for flexible matching
+- **Result**: All schema fields now correctly match regardless of case variations
+
+#### **Enhanced Validation Application**
+- **Improvement**: Both property-level and top-level schema enhancement now use case-insensitive matching
+- **Benefit**: More reliable validation application across different schema file formats
+- **Example**: SupConfirm now correctly gets `enum: ["Y"]` validation
+
 ### **v2.1 - Pattern Conversion Fixes**
 **January 2026**: Fixed critical regex pattern conversion issues for better JSON Schema compatibility:
 
@@ -248,6 +264,24 @@ Date:
 
 // After (correct)  
 "pattern": "^(\\d{1,2}\\.\\d{3}|100.000)$"  // ✅ Exact match only
+```
+
+#### **Case-Insensitive Schema Matching**
+```yaml
+# Swagger field name
+SupConfirm:
+  type: string
+  
+# JSON schema definition (different case)
+"Supconfirm": {
+  "type": "string", 
+  "enum": ["Y"]
+}
+
+# Result: Successfully matched and enhanced
+SupConfirm:
+  type: string
+  enum: ["Y"]
 ```
 
 #### **Clean Output Option**

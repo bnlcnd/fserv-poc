@@ -7,6 +7,9 @@
     This script provides a convenient PowerShell interface for the Python-based
     schema automation tools. It handles the conversion of XML schemas to JSON
     and applies comprehensive validation to Swagger/OpenAPI files.
+    
+    Features include case-insensitive schema field matching, pattern validation
+    fixes, and preservation of documentation while adding strict validation.
 
 .PARAMETER XsdFile
     Path to the XML Schema (XSD) file to convert

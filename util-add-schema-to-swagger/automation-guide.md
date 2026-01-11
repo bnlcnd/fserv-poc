@@ -4,11 +4,28 @@ This guide explains how to use the automated scripts to convert XML schemas to J
 
 ## Overview
 
-The automation suite consists of three main scripts:
+The automation suite consists of three main scripts with enhanced capabilities:
 
-1. **`xsd-to-json-schema.py`** - Converts XML Schema (XSD) to JSON Schema
-2. **`apply-schema-to-swagger.py`** - Applies schema validation to Swagger YAML files
-3. **`batch-enhance-apis.py`** - Processes multiple API files in batch
+1. **`xsd-to-json-schema.py`** - Converts XML Schema (XSD) to JSON Schema with pattern fixes
+2. **`apply-schema-to-swagger.py`** - Applies schema validation with case-insensitive matching
+3. **`batch-enhance-apis.py`** - Processes multiple API files with progress reporting
+
+## Recent Enhancements (January 2026)
+
+### ✅ Case-Insensitive Schema Matching
+- Handles field name variations between Swagger and schema files
+- Example: "SupConfirm" in Swagger matches "Supconfirm" in JSON schema
+- More reliable validation application across different file formats
+
+### ✅ Pattern Conversion Fixes
+- Fixed double-escaping issues in regex patterns
+- Corrected alternation anchoring for proper validation
+- Auto-grouping for alternation patterns
+
+### ✅ Documentation Preservation
+- Preserves `externalDocs`, `example`, and `description` metadata
+- Applies validation while maintaining compliance documentation
+- No synthetic descriptions override existing content
 
 ## Prerequisites
 

@@ -282,13 +282,41 @@ class SwaggerSchemaApplier:
             'AmtType': 'AmtType'
         }
         
-        # Check if property should reference a schema type
+        # Check if property should inherit validation from a schema type
         for field_pattern, schema_type in field_mappings.items():
-            if field_pattern in prop_name and schema_type in self.schema_mappings:
-                # Replace with reference to validated type
-                prop_def.clear()
-                prop_def['$ref'] = f'#/components/schemas/{schema_type}'
-                print(f"   🔗 Mapped {prop_name} -> {schema_type}")
+            schema_key = self._find_schema_key_case_insensitive(schema_type)
+            if field_pattern in prop_name and schema_key:
+                # Copy validation properties while preserving original metadata
+                source_schema = self.schema_mappings[schema_key]
+                
+                # Preserve existing metadata
+                original_docs = prop_def.get('externalDocs')
+                original_example = prop_def.get('example')
+                original_description = prop_def.get('description')
+                
+                # Copy validation properties from source schema
+                if 'type' in source_schema:
+                    prop_def['type'] = source_schema['type']
+                if 'pattern' in source_schema:
+                    prop_def['pattern'] = source_schema['pattern']
+                if 'minLength' in source_schema:
+                    prop_def['minLength'] = source_schema['minLength']
+                if 'maxLength' in source_schema:
+                    prop_def['maxLength'] = source_schema['maxLength']
+                if 'enum' in source_schema:
+                    prop_def['enum'] = source_schema['enum']
+                if 'format' in source_schema:
+                    prop_def['format'] = source_schema['format']
+                
+                # Restore original metadata
+                if original_docs:
+                    prop_def['externalDocs'] = original_docs
+                if original_example:
+                    prop_def['example'] = original_example
+                if original_description:
+                    prop_def['description'] = original_description
+                
+                print(f"   ✨ Enhanced {prop_name} with {schema_type} validation (preserving docs)")
                 break
     
     def _enhance_top_level_schema(self, schema_name: str, schema_def: Dict[str, Any]):
@@ -297,7 +325,7 @@ class SwaggerSchemaApplier:
         if schema_def.get('type') != 'string':
             return
             
-        # Skip schemas that are mapped to base types to avoid duplication
+        # Map field names to their validation types
         field_mappings = {
             'Date': 'Date8', 'Time': 'Time6', 'MgmtCode': 'MgmtCodeType',
             'DlrCode': 'Length4', 'IntCode': 'Alpha3To4', 'SrcID': 'String15',
@@ -306,13 +334,90 @@ class SwaggerSchemaApplier:
             'AcctDesig': 'AcctDesigType', 'AmtType': 'AmtType'
         }
         
-        # If this schema is mapped as a field replacement, skip top-level enhancement
-        if schema_name in field_mappings.values():
-            return
+        # Check if this field should be enhanced with a specific validation type
+        if schema_name in field_mappings:
+            validation_type = field_mappings[schema_name]
+            schema_key = self._find_schema_key_case_insensitive(validation_type)
+            if schema_key:
+                source_schema = self.schema_mappings[schema_key]
+                
+                # Preserve existing metadata
+                original_docs = schema_def.get('externalDocs')
+                original_example = schema_def.get('example')
+                original_description = schema_def.get('description')
+                
+                # Copy validation properties from source schema
+                if 'pattern' in source_schema:
+                    schema_def['pattern'] = source_schema['pattern']
+                if 'minLength' in source_schema:
+                    schema_def['minLength'] = source_schema['minLength']
+                if 'maxLength' in source_schema:
+                    schema_def['maxLength'] = source_schema['maxLength']
+                if 'enum' in source_schema:
+                    schema_def['enum'] = source_schema['enum']
+                if 'format' in source_schema:
+                    schema_def['format'] = source_schema['format']
+                    
+                # Restore original metadata
+                if original_docs:
+                    schema_def['externalDocs'] = original_docs
+                if original_example:
+                    schema_def['example'] = original_example
+                if original_description:
+                    schema_def['description'] = original_description
+                    
+                print(f"   ✨ Enhanced top-level {schema_name} with {validation_type} validation (preserving docs)")
+                return
+        
+        # Otherwise, check if we have direct validation for this schema name in our JSON schema
+        schema_key = self._find_schema_key_case_insensitive(schema_name)
+        if schema_key:
+            print(f"   🔍 Found case-insensitive match for {schema_name} -> {schema_key}")
+            json_validation = self.schema_mappings[schema_key]
             
-        # Check if we have validation for this schema name in our JSON schema
+            # Apply enum validation if present
+            if 'enum' in json_validation:
+                schema_def['enum'] = json_validation['enum']
+                print(f"   📋 Added enum to {schema_name}: {json_validation['enum']}")
+            
+            # Apply pattern validation if present
+            if 'pattern' in json_validation:
+                schema_def['pattern'] = json_validation['pattern']
+                print(f"   🔍 Added pattern to {schema_name}: {json_validation['pattern']}")
+                
+            # Apply length constraints if present
+            if 'minLength' in json_validation:
+                schema_def['minLength'] = json_validation['minLength']
+                print(f"   📏 Added minLength to {schema_name}: {json_validation['minLength']}")
+            if 'maxLength' in json_validation:
+                schema_def['maxLength'] = json_validation['maxLength']
+                print(f"   📏 Added maxLength to {schema_name}: {json_validation['maxLength']}")
+                
+            # Update description if JSON schema has one
+            if 'description' in json_validation and 'description' not in schema_def:
+                schema_def['description'] = json_validation['description']
+        
+    def _find_schema_key_case_insensitive(self, schema_name: str) -> Optional[str]:
+        """Find schema key with case-insensitive matching."""
+        # First try exact match
         if schema_name in self.schema_mappings:
-            json_validation = self.schema_mappings[schema_name]
+            return schema_name
+        
+        # Then try case-insensitive match
+        schema_name_lower = schema_name.lower()
+        for key in self.schema_mappings.keys():
+            if key.lower() == schema_name_lower:
+                return key
+        
+        return None
+        
+        # Otherwise, check if we have direct validation for this schema name in our JSON schema
+        schema_key = self._find_schema_key_case_insensitive(schema_name)
+        if schema_name == 'SupConfirm':
+            print(f"   🐛 DEBUG: SupConfirm case-insensitive lookup result: {schema_key}")
+        if schema_key:
+            print(f"   🔍 Found case-insensitive match for {schema_name} -> {schema_key}")
+            json_validation = self.schema_mappings[schema_key]
             
             # Apply enum validation if present
             if 'enum' in json_validation:
@@ -363,10 +468,9 @@ class SwaggerSchemaApplier:
     
     def _apply_string_validations(self, schema_def: Dict[str, Any]):
         """Apply appropriate string validations."""
-        # Add pattern for preventing leading/trailing whitespace if none exists
-        if 'pattern' not in schema_def and 'enum' not in schema_def:
-            if 'minLength' in schema_def or 'maxLength' in schema_def:
-                schema_def['pattern'] = '^[^\\s]+(\\s+[^\\s]+)*$'
+        # Only apply patterns that are explicitly defined in the source schema
+        # Do not add automatic patterns - follow the XML/JSON schema definitions exactly
+        pass
     
     def _add_transaction_type_validations(self, swagger_data: Dict[str, Any]):
         """Add API-specific transaction type validations."""
@@ -493,4 +597,4 @@ Examples:
 
 
 if __name__ == '__main__':
-    main()
+    main() 

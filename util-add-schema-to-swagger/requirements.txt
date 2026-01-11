@@ -1,4 +1,5 @@
 # Required packages for schema automation scripts
+# Updated: January 10, 2026
 
 # XML Schema processing
 xmlschema>=2.4.0
@@ -17,6 +18,9 @@ click>=8.0.0
 
 # Progress bars for batch processing
 tqdm>=4.64.0
+
+# Colored terminal output
+colorama>=0.4.4
 
 # Color output for CLI
 colorama>=0.4.4

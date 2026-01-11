@@ -5,6 +5,12 @@ Batch API Enhancement Script
 This script processes multiple Swagger YAML files and applies schema validation to all of them.
 Useful for enhancing entire API suites with consistent validation.
 
+Features:
+- Case-insensitive schema field matching for reliable validation application
+- Comprehensive pattern and enum validation from JSON schemas
+- Preserves documentation while adding validation constraints
+- Progress reporting with detailed success/failure statistics
+
 Usage:
     python batch-enhance-apis.py <input_dir> <schema_file> <output_dir> [options]
 
